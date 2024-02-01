@@ -1,6 +1,6 @@
-# Skjelettprosjekt for TDT4100 prosjekt V2023
+# Skjelettprosjekt for TDT4100 prosjekt V2024
 
-Dette repoet er et skjelettprosjekt for TDT4100 prosjektet våren 2023.
+Dette repoet er et skjelettprosjekt for TDT4100 prosjektet våren 2024.
 
 Vi har opprettet et eksempelprosjekt her, som ment for at dere skal kunne komme raskt igang med deres eget prosjekt.
 
