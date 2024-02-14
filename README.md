@@ -70,17 +70,17 @@ I tillegg til alt dette er det laget en liten [eksempel testfil](src/test/java/e
 
 | Nøkkelpunkt                              | Beskrivelse                             |
 | ---------------------------------------- | --------------------------------------- |
-| Innleveringsfrist                        | 14. april                               |
-| Demonstrasjonsfrist hos læringsassistent | 21. mai                                 |
+| Innleveringsfrist                        | 12. april                               |
+| Demonstrasjonsfrist hos læringsassistent | 19. april                               |
 | Gruppestørrelse                          | 1 eller 2 personer                      |
 
 ### Anbefalte perioder å jobbe med prosjektet
 
 | Uke   | Fra  | Til  | Beskrivelse                                 |
 | ----- | ---- | ---- | ------------------------------------------- |
-| 12    | 20/3 | 24/2 | Grunnklasser og brukergrensesnitt           |
-| 13    | 27/3 | 31/3 | Lagring of filhåndtering                    |
-| 14    |      |      | Påske                                       |
-| 15    | 10/4 | 14/4 | Fullføre appen med tilhørende dokumentasjon |
+| 12    | 18/3 | 24/2 | Grunnklasser og brukergrensesnitt           |
+| 13    |      |      | Påske                                       |
+| 14    |  1/4 |  7/4 | Lagring of filhåndtering                    |
+| 15    |  8/4 | 12/4 | Fullføre appen med tilhørende dokumentasjon |
 
 **_LYKKE TIL_**
