@@ -24,6 +24,8 @@ Chess implemented in JavaFX is my project for the subject of Object-Oriented-Pro
 Chess is a turn-based boardgame played between 2 players where you win if you checkmate your opponent.
 The goal of this application is to create a playable game of chess with correct underlying game logic and an interactive user interface for playing moves.
 
+### Functional requirements
+
 Our requirements for this product are as follows:
 
 - [ ] A user or multiple users, shall be able to play a game of chess locally on the same machine where the white and black players alternate playing moves
@@ -31,3 +33,23 @@ Our requirements for this product are as follows:
 - [ ] A user shall be able to browse the move history of a finished game
 - [ ] A user shall be able to import a finished game with a file to browse
 - [ ] A user shall be able to export a finished game to store or share
+
+### Class descriptions - TODO
+
+> Fortelle kort hva de to (minimum to, kan ha flere) grunnklassene skal inneholde, og hvilken klasse som skal ha noen form for kalkulasjoner eller annen logikk.
+
+### File handling
+
+A user shall be able to import and export chess games as `.pgn` files.
+
+### Testing
+
+General game logic like checking for illegal moves shall be tested, as well as importing and exporting of `.pgn` files.
+
+## Documentation - TODO
+
+### Description - TODO
+
+### Diagram - TODO
+
+### Questions - TODO
