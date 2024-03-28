@@ -16,3 +16,18 @@ Chess implemented in JavaFX is my project for the subject of Object-Oriented-Pro
   - [ ] Code shall be documented. (Comments in code should answer why decisions were made as they were)
   - [ ] It shall explain how the app works.
   - [ ] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
+
+## Project planning
+
+### App description
+
+Chess is a turn-based boardgame played between 2 players where you win if you checkmate your opponent.
+The goal of this application is to create a playable game of chess with correct underlying game logic and an interactive user interface for playing moves.
+
+Our requirements for this product are as follows:
+
+- [ ] A user or multiple users, shall be able to play a game of chess locally on the same machine where the white and black players alternate playing moves
+- [ ] In a chess game, a user shall not be able to play illegal moves
+- [ ] A user shall be able to browse the move history of a finished game
+- [ ] A user shall be able to import a finished game with a file to browse
+- [ ] A user shall be able to export a finished game to store or share
