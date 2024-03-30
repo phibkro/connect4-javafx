@@ -19,18 +19,16 @@ public class Controller {
 
   @FXML
   private void initialize() {
-    int sideSize = 3;
-    int boardSize = sideSize * sideSize; // 9
-
-    Button[] tiles = new Button[boardSize];
+    Button[] tiles = new Button[BoardState.BOARD_SIZE];
     for (int i = 0; i < tiles.length; i++) {
       Button tile = new Button();
       tiles[i] = tile;
 
       tile.setText("[   ]");
       tile.setPrefSize(
-          board.getPrefWidth() / sideSize,
-          board.getPrefWidth() / sideSize);
+          board.getPrefWidth() / BoardState.SIDE_SIZE,
+          board.getPrefWidth() / BoardState.SIDE_SIZE);
+
       tile.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
