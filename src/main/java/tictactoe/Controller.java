@@ -35,6 +35,7 @@ public class Controller {
         @Override
         public void handle(ActionEvent event) {
           fireClick(tile);
+          tile.setOnAction(null);
         }
       });
     }
