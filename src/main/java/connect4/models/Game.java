@@ -6,7 +6,7 @@ public class Game {
   private final int BOARD_WIDTH = 7;
   private final int BOARD_HEIGHT = 6;
   private double tileSize = 50;
-  private Tile[][] board = new Tile[BOARD_WIDTH][BOARD_HEIGHT];
+  private Tile[] board = new Tile[BOARD_WIDTH * BOARD_HEIGHT];
   private Tile currentPlayer;
 
   public Game() {
@@ -33,15 +33,29 @@ public class Game {
   }
 
   public Tile getCurrentPlayer() {
-    return currentPlayer;
+    return this.currentPlayer;
   }
 
-  public boolean isValidMove(int columnIndex) {
-    // TODO
-    return true;
+  public boolean isValidMove(int column) {
+    BoardHelper boardHelper = new BoardHelper(this.BOARD_WIDTH, this.BOARD_HEIGHT, this.board);
+    Tile[] highestRow = boardHelper.getRow(0);
+
+    return highestRow[column] == Tile.Empty;
   }
 
-  public void makeMove(int columnIndex) {
-    // TODO
+  public void makeMove(int column) throws IllegalArgumentException {
+    if (!this.isValidMove(column)) {
+      throw new IllegalArgumentException("Invalid move to column " + column);
+    }
+
+    BoardHelper boardHelper = new BoardHelper(this.BOARD_WIDTH, this.BOARD_HEIGHT, this.board);
+    Tile[] selectedColumn = boardHelper.getColumn(column);
+
+    for (int row = BOARD_HEIGHT - 1; row >= 0; row--) {
+      if (selectedColumn[row] == Tile.Empty) {
+        this.board[boardHelper.translate(row, column)] = this.currentPlayer;
+        break;
+      }
+    }
   }
 }
