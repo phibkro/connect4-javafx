@@ -5,5 +5,7 @@ public interface VectorGame {
 
   boolean isValidMove(int column);
 
+  boolean[] getValidMoves();
+
   Tile isWon();
 }
