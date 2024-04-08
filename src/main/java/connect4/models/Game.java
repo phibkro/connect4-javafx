@@ -2,7 +2,7 @@ package connect4.models;
 
 import java.util.Arrays;
 
-public class Game {
+public class Game implements VectorGame {
   private final int BOARD_WIDTH = 7;
   private final int BOARD_HEIGHT = 6;
   private double tileSize = 50;
@@ -43,5 +43,11 @@ public class Game {
 
   public void makeMove(int columnIndex) {
     // TODO
+  }
+
+  @Override
+  public Tile isWon() {
+    // TODO Auto-generated method stub
+    return null;
   }
 }
