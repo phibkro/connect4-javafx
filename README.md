@@ -53,3 +53,7 @@ General game logic like checking for illegal moves shall be tested, as well as i
 ### Diagram - TODO
 
 ### Questions - TODO
+
+## Credits
+
+<a href="https://www.flaticon.com/free-icons/joystick" title="joystick icons">Joystick icons created by Us and Up - Flaticon</a>
