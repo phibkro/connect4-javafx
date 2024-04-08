@@ -15,7 +15,7 @@ public class App extends Application {
 
   @Override
   public void start(Stage primaryStage) throws IOException {
-    String appPath = "app.fxml";
+    String appPath = "App.fxml";
     URL appLocation = getClass().getResource(appPath);
     Scene scene = new Scene(FXMLLoader.load(appLocation));
 

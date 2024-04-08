@@ -31,4 +31,72 @@ public class BoardState {
     this.xs = xs;
     this.os = os;
   }
+
+  BoardState(BoardState boardState) {
+    this.xs = boardState.xs;
+    this.os = boardState.os;
+  }
+
+  public boolean[] getOccupiedTiles() {
+    boolean[] board = new boolean[BOARD_SIZE];
+    for (int i = 0; i < board.length; i++) {
+      board[i] = this.xs[i] || this.os[i];
+    }
+    return board;
+  }
+
+  public boolean isWon() {
+    if (xs[0] && xs[1] && xs[2]) {
+      return true;
+    }
+    if (os[0] && os[1] && os[2]) {
+      return true;
+    }
+    if (xs[3] && xs[4] && xs[5]) {
+      return true;
+    }
+    if (os[3] && os[4] && os[5]) {
+      return true;
+    }
+    if (xs[6] && xs[7] && xs[8]) {
+      return true;
+    }
+    if (os[6] && os[7] && os[8]) {
+      return true;
+    }
+
+    if (xs[0] && xs[3] && xs[6]) {
+      return true;
+    }
+    if (os[0] && os[3] && os[6]) {
+      return true;
+    }
+    if (xs[1] && xs[4] && xs[7]) {
+      return true;
+    }
+    if (os[1] && os[4] && os[7]) {
+      return true;
+    }
+    if (xs[2] && xs[5] && xs[8]) {
+      return true;
+    }
+    if (os[2] && os[5] && os[8]) {
+      return true;
+    }
+
+    if (xs[0] && xs[4] && xs[9]) {
+      return true;
+    }
+    if (os[0] && os[4] && os[9]) {
+      return true;
+    }
+    if (xs[2] && xs[4] && xs[6]) {
+      return true;
+    }
+    if (os[2] && os[4] && os[6]) {
+      return true;
+    }
+
+    return false;
+  }
 }

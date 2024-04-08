@@ -3,7 +3,9 @@
     "java.debug.settings.forceBuildBeforeLaunch": false,
     "java.debug.settings.console": "internalConsole",
     "conventionalCommits.scopes": [
-      "tictactoe"
+      "tictactoe",
+      "connect4",
+      "chess"
     ]
   }
   

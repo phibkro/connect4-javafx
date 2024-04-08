@@ -10,6 +10,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 
 public class Controller {
+  private Game game;
+
   @FXML
   private FlowPane board;
   @FXML
@@ -17,8 +19,16 @@ public class Controller {
   @FXML
   private TextField input;
 
+  public Controller() {
+    this.game = new Game();
+  }
+
   @FXML
   private void initialize() {
+    this.output.setText(String.format(
+        "Player %c make your move!",
+        this.game.getCurrentPlayer().toChar()));
+    // Create game Buttons programmatically
     Button[] tiles = new Button[BoardState.BOARD_SIZE];
     for (int i = 0; i < tiles.length; i++) {
       Button tile = new Button();
@@ -41,7 +51,10 @@ public class Controller {
   }
 
   void fireClick(Button tile) {
-    tile.setText("null");
+    tile.setText(String.format(
+        "%c",
+        this.game.getCurrentPlayer().toChar()));
+    System.out.println("pressed");
   }
 
   @FXML
