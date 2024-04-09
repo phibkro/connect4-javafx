@@ -1,7 +1,5 @@
 package connect4.models;
 
-import java.io.File;
-
 public interface VectorGame {
   void makeMove(int column) throws IllegalArgumentException, IllegalStateException;
   // Should throw IllegalArgumentException
