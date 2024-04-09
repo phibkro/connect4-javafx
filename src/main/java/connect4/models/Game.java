@@ -5,11 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game implements VectorGame {
+  public static final int WINNING_LENGTH = 4;
   public static final int HEIGHT = 6;
   public static final int WIDTH = 7;
+  public static final int SIZE = Game.HEIGHT * Game.WIDTH;
   private Token currentPlayer = Token.Player;
   private List<Integer> moveHistory;
-  private Token[] board = new Token[WIDTH * HEIGHT];
+  private Token[] board = new Token[Game.SIZE];
 
   public Game() {
     this.moveHistory = new ArrayList<>();
@@ -57,7 +59,7 @@ public class Game implements VectorGame {
   public boolean isGameOver() {
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
 
-    if (this.moveHistory.size() == Game.HEIGHT * Game.WIDTH) {
+    if (this.moveHistory.size() == Game.SIZE) {
       return true;
     }
 
@@ -69,7 +71,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isNInARow(token, row, column, 4)) {
+        if (boardHelper.isNInARow(token, row, column, Game.WINNING_LENGTH)) {
           return true;
         }
       }
@@ -90,7 +92,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isNInARow(token, row, column, 4)) {
+        if (boardHelper.isNInARow(token, row, column, Game.WINNING_LENGTH)) {
           return token;
         }
       }
