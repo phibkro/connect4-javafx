@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.shape.Circle;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -32,7 +31,7 @@ public class Controller implements Initializable {
   @FXML
   private HBox board;
 
-  private Pane[] columns = new Pane[Game.COLUMN_COUNT];
+  private VBox[] columns = new VBox[Game.COLUMN_COUNT];
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -40,13 +39,13 @@ public class Controller implements Initializable {
 
     // Create and bind board
     {
-      // Recontextualize attributes with relevant names
-
-      // Bind gridShape
+      // Bind board
       this.board.getChildren().clear();
 
-      // Create gridShape
+      // Create board
       {
+
+        // Recontextualize attributes with relevant names
         final double COLUMN_WIDTH = TILE_SIZE;
         final double COLUMN_HEIGHT = TILE_SIZE * Game.COLUMN_SIZE;
         for (int i = 0; i < Game.COLUMN_COUNT; i++) {
@@ -54,26 +53,37 @@ public class Controller implements Initializable {
           stackPane.setPrefWidth(COLUMN_WIDTH);
           stackPane.setPrefHeight(COLUMN_HEIGHT);
 
+          // Configure visual vBox
           VBox vBox = new VBox();
           vBox.setPrefWidth(COLUMN_WIDTH);
           vBox.setPrefHeight(COLUMN_HEIGHT);
+          // Flip it
           vBox.setRotate(180);
 
+          // Configure interactive button element
           Button btn = new Button();
           btn.setPrefWidth(COLUMN_WIDTH);
           btn.setPrefHeight(COLUMN_HEIGHT);
           btn.setOpacity(0.50);
+          // Add color
           btn.setDefaultButton(true);
 
+          // Add elements to app
           this.board.getChildren().add(stackPane);
           stackPane.getChildren().addAll(vBox, btn);
+
+          // Copy index to use in event handler
           final int x = i;
+
+          // Store visual columns for later use
           this.columns[x] = vBox;
 
           btn.setOnAction(e -> {
             if (this.game.isMoveLegal(x)) {
+              // Copy current player before we make move
               final Tile currentPlayer = this.game.getCurrentPlayer();
-              // Update game
+
+              // Only make move if move is legal
               this.game.makeMove(x);
 
               // Update ui
@@ -89,14 +99,16 @@ public class Controller implements Initializable {
                   System.err.println("This shouldn't happen");
                   break;
               }
+              // Place disk in app
               this.columns[x].getChildren().add(circle);
 
-              // Update handlers
+              // Disable btn and remove event handler if the next move is illegal
               if (!this.game.isMoveLegal(x)) {
                 btn.setDisable(true);
                 btn.setOnAction(null);
               }
             } else {
+              // This shouldn't happen as the event handler is removed
               System.err.println("wtf");
             }
           });
