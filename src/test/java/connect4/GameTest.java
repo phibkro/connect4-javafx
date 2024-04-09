@@ -1,6 +1,7 @@
 package connect4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,13 +24,11 @@ public class GameTest {
     }
 
     @Test
-    public void testIsValidMove() {
-        assertTrue(this.game.isMoveLegal(0));
-        assertTrue(this.game.isMoveLegal(1));
-        assertTrue(this.game.isMoveLegal(2));
-        assertTrue(this.game.isMoveLegal(3));
-        assertTrue(this.game.isMoveLegal(4));
-        assertTrue(this.game.isMoveLegal(5));
-        assertTrue(this.game.isMoveLegal(6));
+    public void isValidMove_Works() {
+        for (int i = 0; i < Game.COLUMN_COUNT; i++) {
+            assertTrue(this.game.isMoveLegal(i));
+        }
+        assertFalse(this.game.isMoveLegal(Game.COLUMN_COUNT + 1));
+        assertFalse(this.game.isMoveLegal(-1));
     }
 }
