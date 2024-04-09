@@ -17,6 +17,7 @@ public class App extends Application {
     String appPath = "App.fxml";
     URL appLocation = getClass().getResource(appPath);
     primaryStage.setScene(new Scene(FXMLLoader.load(appLocation)));
+    primaryStage.setResizable(false);
 
     primaryStage.show();
   }
