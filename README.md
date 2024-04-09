@@ -1,6 +1,6 @@
-# Chess in JavaFX | TDT4100 - OOP
+# Connect4 in JavaFX | TDT4100 - OOP
 
-Chess implemented in JavaFX is my project for the subject of Object-Oriented-Programming at NTNU.
+Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-Programming at NTNU.
 
 ## Requirements
 
@@ -21,8 +21,8 @@ Chess implemented in JavaFX is my project for the subject of Object-Oriented-Pro
 
 ### App description
 
-Chess is a turn-based boardgame played between 2 players where you win if you checkmate your opponent.
-The goal of this application is to create a playable game of chess with correct underlying game logic and an interactive user interface for playing moves.
+Connect4 is a turn-based boardgame played between 2 players where you win if you line up 4 pieces in a row, horizontally, vertically or diagonally.
+The goal of this application is to create a playable game of Connect4 with correct underlying game logic and an interactive Graphical User Interface (GUI) for playing moves.
 
 ### Functional requirements
 
