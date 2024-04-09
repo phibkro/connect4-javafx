@@ -3,7 +3,11 @@ package connect4.models;
 import java.io.File;
 
 public interface VectorGame {
-  void makeMove(int column);
+  void makeMove(int column) throws IllegalArgumentException, IllegalStateException;
+  // Should throw IllegalArgumentException
+  // if column is negative
+  // Should throw IllegalStateException
+  // if column is full
 
   boolean isMoveLegal(int column);
 
@@ -11,9 +15,11 @@ public interface VectorGame {
 
   boolean isGameOver();
 
-  Tile getWinner();
+  Tile getWinner() throws IllegalStateException;
+  // Should throw if game is not over
 
-  void loadGame(File file);
+  void loadGame(File file) throws IllegalArgumentException;
+  // Should throw if passed an incompatible file type
 
   File saveGame();
 }
