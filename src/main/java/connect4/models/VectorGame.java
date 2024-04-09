@@ -11,8 +11,6 @@ public interface VectorGame {
 
   boolean isMoveLegal(int column);
 
-  boolean[] getLegalMoves();
-
   boolean isGameOver();
 
   Tile getWinner() throws IllegalStateException;
