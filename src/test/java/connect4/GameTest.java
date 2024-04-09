@@ -24,12 +24,12 @@ public class GameTest {
 
     @Test
     public void testIsValidMove() {
-        assertTrue(this.game.isValidMove(0));
-        assertTrue(this.game.isValidMove(1));
-        assertTrue(this.game.isValidMove(2));
-        assertTrue(this.game.isValidMove(3));
-        assertTrue(this.game.isValidMove(4));
-        assertTrue(this.game.isValidMove(5));
-        assertTrue(this.game.isValidMove(6));
+        assertTrue(this.game.isMoveLegal(0));
+        assertTrue(this.game.isMoveLegal(1));
+        assertTrue(this.game.isMoveLegal(2));
+        assertTrue(this.game.isMoveLegal(3));
+        assertTrue(this.game.isMoveLegal(4));
+        assertTrue(this.game.isMoveLegal(5));
+        assertTrue(this.game.isMoveLegal(6));
     }
 }
