@@ -2,8 +2,6 @@ package connect4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -56,13 +54,16 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void testGetHorizontalAndDiagonalTiles() {
+    public void testIsXSelfSameTilesInARowHorizontalOrDiagonal() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        Tile[] tiles = boardHelper.getHorizontalAndDiagonalTiles(0, 0, 3);
+        boolean isPlayerFourTimesInARow = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 0, 0, 3);
+        boolean isPlayerFourTimesInARow2 = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 1, 0, 3);
+        boolean isPlayerFourTimesInARow3 = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 0, 0, 4);
 
-        assertEquals(Arrays.toString(tiles),
-                "[Player, Player, Player, Player, Empty, Opponent, Empty, Empty, Opponent, Empty]");
+        assertEquals(isPlayerFourTimesInARow, true);
+        assertEquals(isPlayerFourTimesInARow2, false);
+        assertEquals(isPlayerFourTimesInARow3, false);
     }
 
     @Test
