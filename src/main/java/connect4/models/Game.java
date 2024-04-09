@@ -7,11 +7,10 @@ public class Game implements VectorGame {
   public static final int COLUMN_SIZE = 6;
   public static final int BOARD_SIZE = COLUMN_COUNT * COLUMN_SIZE;
   private Tile[] board = new Tile[COLUMN_COUNT * COLUMN_SIZE];
-  private Tile currentPlayer;
+  private Tile currentPlayer = Tile.Player;
 
   public Game() {
     Arrays.fill(this.board, Tile.Empty);
-    this.currentPlayer = Tile.Player;
   }
 
   public Tile getCurrentPlayer() {
