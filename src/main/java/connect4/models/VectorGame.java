@@ -9,7 +9,9 @@ public interface VectorGame {
 
   boolean[] getLegalMoves();
 
-  Tile isWon();
+  boolean isGameOver();
+
+  Tile getWinner();
 
   void loadGame(File file);
 

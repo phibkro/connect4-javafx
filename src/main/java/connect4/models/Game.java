@@ -43,8 +43,8 @@ public class Game implements VectorGame {
   }
 
   @Override
-  public Tile isWon() {
+  public boolean isGameOver() {
     // TODO Auto-generated method stub
-    return null;
+    return false;
   }
 }
