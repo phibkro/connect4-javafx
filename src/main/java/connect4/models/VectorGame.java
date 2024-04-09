@@ -16,8 +16,7 @@ public interface VectorGame {
   Token getWinner() throws IllegalStateException;
   // Should throw if game is not over
 
-  void loadGame(File file) throws IllegalArgumentException;
-  // Should throw if passed an incompatible file type
+  void loadMoveHistory(String moveHistory);
 
-  File saveGame();
+  String extractMoveHistory();
 }
