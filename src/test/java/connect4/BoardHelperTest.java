@@ -54,12 +54,12 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void testIsXSelfSameTilesInARowHorizontalOrDiagonal() {
+    public void testIsNInARow() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        boolean isPlayerFourTimesInARow = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 0, 0, 3);
-        boolean isPlayerFourTimesInARow2 = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 1, 0, 3);
-        boolean isPlayerFourTimesInARow3 = boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(Tile.Player, 0, 0, 4);
+        boolean isPlayerFourTimesInARow = boardHelper.isNInARow(Tile.Player, 0, 0, 4);
+        boolean isPlayerFourTimesInARow2 = boardHelper.isNInARow(Tile.Player, 1, 0, 4);
+        boolean isPlayerFourTimesInARow3 = boardHelper.isNInARow(Tile.Player, 0, 0, 5);
 
         assertEquals(isPlayerFourTimesInARow, true);
         assertEquals(isPlayerFourTimesInARow2, false);
