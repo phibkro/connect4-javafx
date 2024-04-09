@@ -9,7 +9,7 @@ public interface VectorGame {
   // Should throw IllegalStateException
   // if column is full
 
-  boolean isMoveLegal(int column);
+  boolean isLegalMove(int column);
 
   boolean isGameOver();
 
