@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -23,6 +24,8 @@ public class Controller implements Initializable {
 
   // Menu elements
   @FXML
+  private Text output;
+  @FXML
   private Button btnStartGame;
   @FXML
   private Button btnLoadGame;
@@ -32,10 +35,12 @@ public class Controller implements Initializable {
   private HBox board;
 
   private VBox[] columns = new VBox[Game.WIDTH];
+  private Button[] gameBtns = new Button[Game.WIDTH];
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     this.game = new Game();
+    this.output.setText(String.format("%s, it is your turn!", this.game.getCurrentPlayer()));
 
     // Create and bind board
     {
@@ -72,11 +77,12 @@ public class Controller implements Initializable {
           this.board.getChildren().add(stackPane);
           stackPane.getChildren().addAll(vBox, btn);
 
+          // Store for later use
+          this.columns[i] = vBox;
+          this.gameBtns[i] = btn;
+
           // Copy index to use in event handler
           final int x = i;
-
-          // Store visual columns for later use
-          this.columns[x] = vBox;
 
           btn.setOnAction(e -> {
             if (this.game.isLegalMove(x)) {
@@ -87,6 +93,7 @@ public class Controller implements Initializable {
               this.game.makeMove(x);
 
               // Update ui
+              this.output.setText(String.format("%s, it is your turn!", this.game.getCurrentPlayer()));
               Circle circle = new Circle(TILE_SIZE / 2);
               switch (currentPlayer) {
                 case Player:
@@ -107,6 +114,10 @@ public class Controller implements Initializable {
                 btn.setDisable(true);
                 btn.setOnAction(null);
               }
+
+              if (this.game.isGameOver()) {
+                this.handleGameOver(this.game.getWinner());
+              }
             } else {
               // This shouldn't happen as the event handler is removed
               System.err.println("wtf");
@@ -114,9 +125,28 @@ public class Controller implements Initializable {
           });
         }
       }
-
     }
+  }
 
+  private void handleGameOver(Tile winner) {
+    for (Button btn : this.gameBtns) {
+      btn.setDisable(true);
+      btn.setOnAction(null);
+    }
+    switch (winner) {
+      case Empty:
+        this.output.setText("It's a stalemate!");
+        break;
+      case Player:
+        this.output.setText("Player, you won!");
+        break;
+      case Opponent:
+        this.output.setText("Opponent, you won!");
+        break;
+      default:
+        this.output.setText("what");
+        break;
+    }
   }
 
   @FXML
