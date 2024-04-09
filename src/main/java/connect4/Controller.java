@@ -31,7 +31,7 @@ public class Controller implements Initializable {
   @FXML
   private HBox board;
 
-  private VBox[] columns = new VBox[Game.COLUMN_COUNT];
+  private VBox[] columns = new VBox[Game.WIDTH];
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -47,8 +47,8 @@ public class Controller implements Initializable {
 
         // Recontextualize attributes with relevant names
         final double COLUMN_WIDTH = TILE_SIZE;
-        final double COLUMN_HEIGHT = TILE_SIZE * Game.COLUMN_SIZE;
-        for (int i = 0; i < Game.COLUMN_COUNT; i++) {
+        final double COLUMN_HEIGHT = TILE_SIZE * Game.HEIGHT;
+        for (int i = 0; i < Game.WIDTH; i++) {
           StackPane stackPane = new StackPane();
           stackPane.setPrefWidth(COLUMN_WIDTH);
           stackPane.setPrefHeight(COLUMN_HEIGHT);
@@ -79,7 +79,7 @@ public class Controller implements Initializable {
           this.columns[x] = vBox;
 
           btn.setOnAction(e -> {
-            if (this.game.isMoveLegal(x)) {
+            if (this.game.isLegalMove(x)) {
               // Copy current player before we make move
               final Tile currentPlayer = this.game.getCurrentPlayer();
 
@@ -103,7 +103,7 @@ public class Controller implements Initializable {
               this.columns[x].getChildren().add(circle);
 
               // Disable btn and remove event handler if the next move is illegal
-              if (!this.game.isMoveLegal(x)) {
+              if (!this.game.isLegalMove(x)) {
                 btn.setDisable(true);
                 btn.setOnAction(null);
               }
