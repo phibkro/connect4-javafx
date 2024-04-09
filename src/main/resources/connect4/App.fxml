@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<FlowPane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+<FlowPane alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="connect4.Controller">
    <children>
-      <FlowPane prefHeight="400.0" prefWidth="400.0" />
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="600.0" stroke="BLACK" strokeType="INSIDE" width="700.0" />
+            <FlowPane fx:id="board" prefHeight="500.0" prefWidth="500.0" />
+         </children>
+      </StackPane>
+      <FlowPane alignment="CENTER" hgap="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0">
+         <children>
+            <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#startNewGame" text="Start game" />
+            <Button fx:id="btnLoadGame" mnemonicParsing="false" onAction="#openFileDialog" text="Load game" />
+            <Button fx:id="btnSaveGame" mnemonicParsing="false" text="Save game" />
+         </children>
+      </FlowPane>
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </FlowPane>
