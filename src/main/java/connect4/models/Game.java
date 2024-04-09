@@ -17,6 +17,7 @@ public class Game implements VectorGame {
     return this.currentPlayer;
   }
 
+  @Override
   public boolean isMoveLegal(int column) {
     BoardHelper boardHelper = new BoardHelper(COLUMN_SIZE, COLUMN_COUNT, this.board);
     Tile[] highestRow = boardHelper.getRow(0);
@@ -24,6 +25,7 @@ public class Game implements VectorGame {
     return highestRow[column] == Tile.Empty;
   }
 
+  @Override
   public void makeMove(int column) throws IllegalArgumentException {
     if (!this.isMoveLegal(column)) {
       throw new IllegalArgumentException("Invalid move to column " + column);
