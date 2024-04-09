@@ -1,5 +1,7 @@
 package connect4.models;
 
+import java.io.File;
+
 public interface VectorGame {
   void makeMove(int column) throws IllegalArgumentException, IllegalStateException;
   // Should throw IllegalArgumentException
@@ -17,7 +19,10 @@ public interface VectorGame {
   void loadGame(File file) throws IllegalArgumentException;
   // Should throw if passed an incompatible file type
 
+  void saveGame(File file);
+
+  void loadMoveHistory(String moveHistory);
+
   String extractMoveHistory();
 
-  void saveGame(File file);
 }
