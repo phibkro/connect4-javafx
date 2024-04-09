@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class Game implements VectorGame {
   public static final int HEIGHT = 6;
   public static final int WIDTH = 7;
-  private Token[] board = new Token[WIDTH * HEIGHT];
   private Token currentPlayer = Token.Player;
+  private Token[] board = new Token[WIDTH * HEIGHT];
 
   public Game() {
     Arrays.fill(this.board, Token.None);
@@ -40,12 +40,12 @@ public class Game implements VectorGame {
 
     for (int row = Game.HEIGHT - 1; row >= 0; row--) {
       if (selectedColumn[row] == Token.None) {
-        this.board[boardHelper.translate(row, column)] = this.currentPlayer;
+        this.board[boardHelper.translate(row, column)] = this.getCurrentPlayer();
         break;
       }
     }
 
-    this.currentPlayer = this.currentPlayer == Token.Player ? Token.Opponent : Token.Player;
+    this.alternatePlayer();
   }
 
   @Override
@@ -100,5 +100,9 @@ public class Game implements VectorGame {
   public File saveGame() {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'saveGame'");
+  }
+
+  private void alternatePlayer() {
+    this.currentPlayer = this.getCurrentPlayer() == Token.Player ? Token.Opponent : Token.Player;
   }
 }
