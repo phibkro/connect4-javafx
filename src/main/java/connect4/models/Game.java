@@ -10,9 +10,7 @@ public class Game implements VectorGame {
   private Tile currentPlayer;
 
   public Game() {
-    Tile[] column = new Tile[BOARD_WIDTH];
-    Arrays.fill(column, Tile.Empty);
-    Arrays.fill(board, column);
+    Arrays.fill(this.board, Tile.Empty);
     this.currentPlayer = Tile.Player;
   }
 
