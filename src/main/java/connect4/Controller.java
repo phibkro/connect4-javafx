@@ -158,7 +158,13 @@ public class Controller implements Initializable {
   private void saveGame(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showSaveDialog(this.board.getScene().getWindow());
-    this.output.setText(String.format("%s selected", file.getPath()));
+    try {
+      this.game.saveGame(file);
+      this.output.setText(String.format("Saved to %s", file.getPath()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      this.output.setText("Couldn't save game");
+    }
   }
 
   @FXML
