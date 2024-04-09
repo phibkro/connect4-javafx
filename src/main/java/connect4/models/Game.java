@@ -82,6 +82,10 @@ public class Game implements VectorGame {
 
   @Override
   public Token getWinner() {
+    if (!this.isGameOver()) {
+      throw new IllegalStateException("Game is not over");
+    }
+
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
 
     for (int row = 0; row < Game.HEIGHT; row++) {
@@ -98,7 +102,7 @@ public class Game implements VectorGame {
       }
     }
 
-    throw new IllegalStateException("No winner found");
+    return Token.None;
   }
 
   @Override
