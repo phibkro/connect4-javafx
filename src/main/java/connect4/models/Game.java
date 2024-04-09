@@ -60,7 +60,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(tile, row, column, 3)) {
+        if (boardHelper.isNInARow(tile, row, column, 4)) {
           return true;
         }
       }
@@ -81,7 +81,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isXSelfSameTilesInARowHorizontalOrDiagonal(tile, row, column, 3)) {
+        if (boardHelper.isNInARow(tile, row, column, 4)) {
           return tile;
         }
       }

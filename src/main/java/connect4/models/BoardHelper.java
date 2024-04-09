@@ -41,20 +41,18 @@ public class BoardHelper {
         return columnTiles;
     }
 
-    public boolean isXSelfSameTilesInARowHorizontalOrDiagonal(Tile tile, int row, int column, int max) {
-        int maxMax = Math.max(this.BOARD_WIDTH, this.BOARD_HEIGHT) - 1;
-
-        if (max <= 0 || max > maxMax) {
-            throw new IllegalArgumentException("`max` must be between 0 and " + maxMax);
+    public boolean isNInARow(Tile tile, int row, int column, int n) {
+        if (n < 1) {
+            throw new IllegalArgumentException("`n` must be between 1 or more");
         }
 
-        int selfSameTilesInARow = 0;
+        int inARow = 1;
 
         for (int[] direction : BoardHelper.DIRECTIONS) {
             int rowDirection = direction[0];
             int columnDirection = direction[1];
 
-            for (int index = 1; index <= max; index++) {
+            for (int index = 1; index < n; index++) {
                 int newRow = row + rowDirection * index;
                 int newColumn = column + columnDirection * index;
 
@@ -63,12 +61,12 @@ public class BoardHelper {
                 }
 
                 if (getTile(newRow, newColumn) == tile) {
-                    selfSameTilesInARow++;
+                    inARow++;
                 } else {
-                    selfSameTilesInARow = 0;
+                    inARow = 0;
                 }
 
-                if (selfSameTilesInARow == max) {
+                if (inARow == n) {
                     return true;
                 }
             }
