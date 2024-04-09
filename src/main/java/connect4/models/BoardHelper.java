@@ -1,9 +1,8 @@
 package connect4.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BoardHelper {
+    public static final int[][] DIRECTIONS = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, { 1, 1 }, { 1, -1 }, { -1, 1 },
+            { -1, -1 } };
     public int BOARD_WIDTH;
     public int BOARD_HEIGHT;
     public Tile[] board;
@@ -14,7 +13,11 @@ public class BoardHelper {
         this.board = board;
     }
 
-    public Tile[] getRow(int row) {
+    public Tile[] getRow(int row) throws IllegalArgumentException {
+        if (row < 0 || row >= this.BOARD_HEIGHT) {
+            throw new IllegalArgumentException("`row` index out of bounds");
+        }
+
         Tile[] rowTiles = new Tile[this.BOARD_WIDTH];
 
         for (int index = 0; index < this.BOARD_WIDTH; index++) {
@@ -25,6 +28,10 @@ public class BoardHelper {
     }
 
     public Tile[] getColumn(int column) {
+        if (column < 0 || column >= this.BOARD_WIDTH) {
+            throw new IllegalArgumentException("`column` index out of bounds");
+        }
+
         Tile[] columnTiles = new Tile[this.BOARD_HEIGHT];
 
         for (int index = 0; index < this.BOARD_HEIGHT; index++) {
@@ -34,19 +41,16 @@ public class BoardHelper {
         return columnTiles;
     }
 
-    public Tile[] getHorizontalAndDiagonalTiles(int row, int column, int max) {
-        max = Math.min(max, Math.max(this.BOARD_WIDTH, this.BOARD_HEIGHT) - 1);
+    public boolean isXSelfSameTilesInARowHorizontalOrDiagonal(Tile tile, int row, int column, int max) {
+        int maxMax = Math.max(this.BOARD_WIDTH, this.BOARD_HEIGHT) - 1;
 
-        List<Tile> tiles = new ArrayList<>();
-        int[][] directions = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, { 1, 1 }, { 1, -1 }, { -1, 1 }, { -1, -1 } };
-
-        tiles.add(getTile(row, column));
-
-        if (max <= 0) {
-            return tiles.toArray(new Tile[0]);
+        if (max <= 0 || max > maxMax) {
+            throw new IllegalArgumentException("`max` must be between 0 and " + maxMax);
         }
 
-        for (int[] direction : directions) {
+        int selfSameTilesInARow = 0;
+
+        for (int[] direction : BoardHelper.DIRECTIONS) {
             int rowDirection = direction[0];
             int columnDirection = direction[1];
 
@@ -58,15 +62,27 @@ public class BoardHelper {
                     break;
                 }
 
-                tiles.add(getTile(newRow, newColumn));
+                if (getTile(newRow, newColumn) == tile) {
+                    selfSameTilesInARow++;
+                } else {
+                    selfSameTilesInARow = 0;
+                }
+
+                if (selfSameTilesInARow == max) {
+                    return true;
+                }
             }
         }
 
-        return tiles.toArray(new Tile[0]);
+        return false;
     }
 
     public Tile getTile(int row, int column) {
         return this.board[translate(row, column)];
+    }
+
+    public Tile getTile(int index) {
+        return this.board[index];
     }
 
     public int translate(int row, int column) {
