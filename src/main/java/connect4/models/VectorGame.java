@@ -1,5 +1,7 @@
 package connect4.models;
 
+import java.io.File;
+
 public interface VectorGame {
   void makeMove(int column);
 
@@ -8,4 +10,8 @@ public interface VectorGame {
   boolean[] getValidMoves();
 
   Tile isWon();
+
+  void loadGame(File file);
+
+  File saveGame();
 }
