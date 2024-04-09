@@ -57,6 +57,10 @@ public class Game implements VectorGame {
   public boolean isGameOver() {
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
 
+    if (this.moveHistory.size() == Game.HEIGHT * Game.WIDTH) {
+      return true;
+    }
+
     for (int row = 0; row < Game.HEIGHT; row++) {
       for (int column = 0; column < Game.WIDTH; column++) {
         Token token = boardHelper.getToken(row, column);
@@ -96,7 +100,7 @@ public class Game implements VectorGame {
   }
 
   @Override
-  public void loadMoveHistory(String moveHistory) {
+  public void loadGame(String moveHistory) {
     this.moveHistory = new ArrayList<>();
     Arrays.fill(this.board, Token.None);
 
