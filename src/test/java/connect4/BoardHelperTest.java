@@ -1,6 +1,8 @@
 package connect4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,13 +59,13 @@ public class BoardHelperTest {
     public void testIsNInARow() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        boolean isPlayerFourTimesInARow = boardHelper.isNInARow(Token.Player, 0, 0, 4);
-        boolean isPlayerFourTimesInARow2 = boardHelper.isNInARow(Token.Player, 1, 0, 4);
-        boolean isPlayerFourTimesInARow3 = boardHelper.isNInARow(Token.Player, 0, 0, 5);
+        boolean isPlayerFourInARow = boardHelper.isNInARow(Token.Player, 0, 0, 4);
+        boolean isPlayerFourInARow2 = boardHelper.isNInARow(Token.Player, 1, 0, 4);
+        boolean isPlayerFourInARow3 = boardHelper.isNInARow(Token.Player, 0, 0, 5);
 
-        assertEquals(isPlayerFourTimesInARow, true);
-        assertEquals(isPlayerFourTimesInARow2, false);
-        assertEquals(isPlayerFourTimesInARow3, false);
+        assertTrue(isPlayerFourInARow);
+        assertFalse(isPlayerFourInARow2);
+        assertFalse(isPlayerFourInARow3);
     }
 
     @Test

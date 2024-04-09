@@ -81,4 +81,31 @@ public class GameTest {
 
         assertEquals(Token.Player, this.game.getWinner());
     }
+
+    @Test
+    public void testLoadMoveHistory() {
+        this.game.makeMove(0);
+
+        String moveHistory = this.game.extractMoveHistory();
+
+        this.game = new Game();
+        this.game.loadMoveHistory(moveHistory);
+
+        assertEquals(Token.Opponent, this.game.getCurrentPlayer());
+    }
+
+    @Test
+    public void testExtractMoveHistory() {
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(2);
+        this.game.makeMove(6);
+        this.game.makeMove(0);
+        this.game.makeMove(0);
+
+        String moveHistory = this.game.extractMoveHistory();
+
+        assertEquals("0102600", moveHistory);
+    }
 }
