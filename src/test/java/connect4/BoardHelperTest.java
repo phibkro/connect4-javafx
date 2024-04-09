@@ -6,32 +6,32 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import connect4.models.BoardHelper;
-import connect4.models.Tile;
+import connect4.models.Token;
 
 public class BoardHelperTest {
-    private Tile[] board;
+    private Token[] board;
 
     @BeforeEach
     public void setUp() {
-        Tile[] board = new Tile[6 * 7];
+        Token[] board = new Token[6 * 7];
         BoardHelper boardHelper = new BoardHelper(6, 7, board);
 
         for (int i = 0; i < 6 * 7; i++) {
             System.out.println(i);
-            board[i] = Tile.Empty;
+            board[i] = Token.None;
         }
 
-        board[boardHelper.translate(0, 0)] = Tile.Player;
-        board[boardHelper.translate(0, 1)] = Tile.Player;
-        board[boardHelper.translate(0, 2)] = Tile.Player;
-        board[boardHelper.translate(0, 3)] = Tile.Player;
+        board[boardHelper.translate(0, 0)] = Token.Player;
+        board[boardHelper.translate(0, 1)] = Token.Player;
+        board[boardHelper.translate(0, 2)] = Token.Player;
+        board[boardHelper.translate(0, 3)] = Token.Player;
 
-        board[boardHelper.translate(2, 0)] = Tile.Opponent;
-        board[boardHelper.translate(2, 1)] = Tile.Opponent;
-        board[boardHelper.translate(2, 2)] = Tile.Opponent;
+        board[boardHelper.translate(2, 0)] = Token.Opponent;
+        board[boardHelper.translate(2, 1)] = Token.Opponent;
+        board[boardHelper.translate(2, 2)] = Token.Opponent;
 
-        board[boardHelper.translate(5, 0)] = Tile.Player;
-        board[boardHelper.translate(5, 1)] = Tile.Player;
+        board[boardHelper.translate(5, 0)] = Token.Player;
+        board[boardHelper.translate(5, 1)] = Token.Player;
 
         this.board = board;
 
@@ -41,7 +41,7 @@ public class BoardHelperTest {
     public void testGetRow() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        Tile[] row = boardHelper.getRow(0);
+        Token[] row = boardHelper.getRow(0);
         assertEquals(7, row.length);
     }
 
@@ -49,7 +49,7 @@ public class BoardHelperTest {
     public void testGetColumn() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        Tile[] column = boardHelper.getColumn(0);
+        Token[] column = boardHelper.getColumn(0);
         assertEquals(6, column.length);
     }
 
@@ -57,9 +57,9 @@ public class BoardHelperTest {
     public void testIsNInARow() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        boolean isPlayerFourTimesInARow = boardHelper.isNInARow(Tile.Player, 0, 0, 4);
-        boolean isPlayerFourTimesInARow2 = boardHelper.isNInARow(Tile.Player, 1, 0, 4);
-        boolean isPlayerFourTimesInARow3 = boardHelper.isNInARow(Tile.Player, 0, 0, 5);
+        boolean isPlayerFourTimesInARow = boardHelper.isNInARow(Token.Player, 0, 0, 4);
+        boolean isPlayerFourTimesInARow2 = boardHelper.isNInARow(Token.Player, 1, 0, 4);
+        boolean isPlayerFourTimesInARow3 = boardHelper.isNInARow(Token.Player, 0, 0, 5);
 
         assertEquals(isPlayerFourTimesInARow, true);
         assertEquals(isPlayerFourTimesInARow2, false);
@@ -70,8 +70,8 @@ public class BoardHelperTest {
     public void getTileTest() {
         BoardHelper boardHelper = new BoardHelper(6, 7, this.board);
 
-        Tile tile = boardHelper.getTile(0, 0);
-        assertEquals(Tile.Player, tile);
+        Token tile = boardHelper.getToken(0, 0);
+        assertEquals(Token.Player, tile);
     }
 
     @Test

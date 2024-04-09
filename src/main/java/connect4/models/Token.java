@@ -1,7 +1,7 @@
 package connect4.models;
 
-public enum Tile {
-  Empty,
+public enum Token {
+  None,
   Player,
   Opponent;
 }

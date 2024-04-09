@@ -6,14 +6,14 @@ import java.util.Arrays;
 public class Game implements VectorGame {
   public static final int HEIGHT = 6;
   public static final int WIDTH = 7;
-  private Tile[] board = new Tile[WIDTH * HEIGHT];
-  private Tile currentPlayer = Tile.Player;
+  private Token[] board = new Token[WIDTH * HEIGHT];
+  private Token currentPlayer = Token.Player;
 
   public Game() {
-    Arrays.fill(this.board, Tile.Empty);
+    Arrays.fill(this.board, Token.None);
   }
 
-  public Tile getCurrentPlayer() {
+  public Token getCurrentPlayer() {
     return this.currentPlayer;
   }
 
@@ -24,9 +24,9 @@ public class Game implements VectorGame {
     }
 
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
-    Tile[] highestRow = boardHelper.getRow(0);
+    Token[] highestRow = boardHelper.getRow(0);
 
-    return highestRow[column] == Tile.Empty;
+    return highestRow[column] == Token.None;
   }
 
   @Override
@@ -36,16 +36,16 @@ public class Game implements VectorGame {
     }
 
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
-    Tile[] selectedColumn = boardHelper.getColumn(column);
+    Token[] selectedColumn = boardHelper.getColumn(column);
 
     for (int row = Game.HEIGHT - 1; row >= 0; row--) {
-      if (selectedColumn[row] == Tile.Empty) {
+      if (selectedColumn[row] == Token.None) {
         this.board[boardHelper.translate(row, column)] = this.currentPlayer;
         break;
       }
     }
 
-    this.currentPlayer = this.currentPlayer == Tile.Player ? Tile.Opponent : Tile.Player;
+    this.currentPlayer = this.currentPlayer == Token.Player ? Token.Opponent : Token.Player;
   }
 
   @Override
@@ -54,13 +54,13 @@ public class Game implements VectorGame {
 
     for (int row = 0; row < Game.HEIGHT; row++) {
       for (int column = 0; column < Game.WIDTH; column++) {
-        Tile tile = boardHelper.getTile(row, column);
+        Token token = boardHelper.getToken(row, column);
 
-        if (tile == Tile.Empty) {
+        if (token == Token.None) {
           continue;
         }
 
-        if (boardHelper.isNInARow(tile, row, column, 4)) {
+        if (boardHelper.isNInARow(token, row, column, 4)) {
           return true;
         }
       }
@@ -70,19 +70,19 @@ public class Game implements VectorGame {
   }
 
   @Override
-  public Tile getWinner() {
+  public Token getWinner() {
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
 
     for (int row = 0; row < Game.HEIGHT; row++) {
       for (int column = 0; column < Game.WIDTH; column++) {
-        Tile tile = boardHelper.getTile(row, column);
+        Token token = boardHelper.getToken(row, column);
 
-        if (tile == Tile.Empty) {
+        if (token == Token.None) {
           continue;
         }
 
-        if (boardHelper.isNInARow(tile, row, column, 4)) {
-          return tile;
+        if (boardHelper.isNInARow(token, row, column, 4)) {
+          return token;
         }
       }
     }

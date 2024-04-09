@@ -13,7 +13,7 @@ public interface VectorGame {
 
   boolean isGameOver();
 
-  Tile getWinner() throws IllegalStateException;
+  Token getWinner() throws IllegalStateException;
   // Should throw if game is not over
 
   void loadGame(File file) throws IllegalArgumentException;

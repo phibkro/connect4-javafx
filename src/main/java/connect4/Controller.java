@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import connect4.models.Game;
-import connect4.models.Tile;
+import connect4.models.Token;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -81,7 +81,7 @@ public class Controller implements Initializable {
           btn.setOnAction(e -> {
             if (this.game.isLegalMove(x)) {
               // Copy current player before we make move
-              final Tile currentPlayer = this.game.getCurrentPlayer();
+              final Token currentPlayer = this.game.getCurrentPlayer();
 
               // Only make move if move is legal
               this.game.makeMove(x);

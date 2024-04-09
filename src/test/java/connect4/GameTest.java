@@ -9,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import connect4.models.Game;
-import connect4.models.Tile;
+import connect4.models.Token;
 
 public class GameTest {
     private Game game;
@@ -21,7 +21,7 @@ public class GameTest {
 
     @Test
     public void testGetCurrentPlayer() {
-        assertEquals(Tile.Player, this.game.getCurrentPlayer());
+        assertEquals(Token.Player, this.game.getCurrentPlayer());
     }
 
     @Test
@@ -40,11 +40,11 @@ public class GameTest {
 
     @Test
     public void testMakeMove() {
-        assertEquals(Tile.Player, this.game.getCurrentPlayer());
+        assertEquals(Token.Player, this.game.getCurrentPlayer());
         this.game.makeMove(0);
-        assertEquals(Tile.Opponent, this.game.getCurrentPlayer());
+        assertEquals(Token.Opponent, this.game.getCurrentPlayer());
         this.game.makeMove(0);
-        assertEquals(Tile.Player, this.game.getCurrentPlayer());
+        assertEquals(Token.Player, this.game.getCurrentPlayer());
 
         assertThrows(IllegalArgumentException.class, () -> {
             this.game.makeMove(-1);
@@ -79,6 +79,6 @@ public class GameTest {
         this.game.makeMove(1);
         this.game.makeMove(0);
 
-        assertEquals(Tile.Player, this.game.getWinner());
+        assertEquals(Token.Player, this.game.getWinner());
     }
 }

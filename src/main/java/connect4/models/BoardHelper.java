@@ -5,43 +5,43 @@ public class BoardHelper {
             { -1, -1 } };
     public int BOARD_WIDTH;
     public int BOARD_HEIGHT;
-    public Tile[] board;
+    public Token[] board;
 
-    public BoardHelper(int BOARD_HEIGHT, int BOARD_WIDTH, Tile[] board) {
+    public BoardHelper(int BOARD_HEIGHT, int BOARD_WIDTH, Token[] board) {
         this.BOARD_HEIGHT = BOARD_HEIGHT;
         this.BOARD_WIDTH = BOARD_WIDTH;
         this.board = board;
     }
 
-    public Tile[] getRow(int row) throws IllegalArgumentException {
+    public Token[] getRow(int row) throws IllegalArgumentException {
         if (row < 0 || row >= this.BOARD_HEIGHT) {
             throw new IllegalArgumentException("`row` index out of bounds");
         }
 
-        Tile[] rowTiles = new Tile[this.BOARD_WIDTH];
+        Token[] chosenRow = new Token[this.BOARD_WIDTH];
 
-        for (int index = 0; index < this.BOARD_WIDTH; index++) {
-            rowTiles[index] = getTile(row, index);
+        for (int column = 0; column < this.BOARD_WIDTH; column++) {
+            chosenRow[column] = getToken(row, column);
         }
 
-        return rowTiles;
+        return chosenRow;
     }
 
-    public Tile[] getColumn(int column) {
+    public Token[] getColumn(int column) {
         if (column < 0 || column >= this.BOARD_WIDTH) {
             throw new IllegalArgumentException("`column` index out of bounds");
         }
 
-        Tile[] columnTiles = new Tile[this.BOARD_HEIGHT];
+        Token[] chosenColumn = new Token[this.BOARD_HEIGHT];
 
-        for (int index = 0; index < this.BOARD_HEIGHT; index++) {
-            columnTiles[index] = getTile(index, column);
+        for (int row = 0; row < this.BOARD_HEIGHT; row++) {
+            chosenColumn[row] = getToken(row, column);
         }
 
-        return columnTiles;
+        return chosenColumn;
     }
 
-    public boolean isNInARow(Tile tile, int row, int column, int n) {
+    public boolean isNInARow(Token token, int row, int column, int n) {
         if (n < 1) {
             throw new IllegalArgumentException("`n` must be between 1 or more");
         }
@@ -60,7 +60,7 @@ public class BoardHelper {
                     break;
                 }
 
-                if (getTile(newRow, newColumn) == tile) {
+                if (getToken(newRow, newColumn) == token) {
                     inARow++;
                 } else {
                     inARow = 0;
@@ -75,11 +75,11 @@ public class BoardHelper {
         return false;
     }
 
-    public Tile getTile(int row, int column) {
+    public Token getToken(int row, int column) {
         return this.board[translate(row, column)];
     }
 
-    public Tile getTile(int index) {
+    public Token getToken(int index) {
         return this.board[index];
     }
 
