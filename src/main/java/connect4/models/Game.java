@@ -29,7 +29,7 @@ public class Game implements VectorGame {
       throw new IllegalArgumentException("Invalid move to column " + column);
     }
 
-    BoardHelper boardHelper = new BoardHelper(COLUMN_COUNT, COLUMN_SIZE, this.board);
+    BoardHelper boardHelper = new BoardHelper(COLUMN_SIZE, COLUMN_COUNT, this.board);
     Tile[] selectedColumn = boardHelper.getColumn(column);
 
     for (int row = COLUMN_SIZE - 1; row >= 0; row--) {
