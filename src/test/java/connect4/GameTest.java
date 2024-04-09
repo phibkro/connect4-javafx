@@ -2,6 +2,7 @@ package connect4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +25,60 @@ public class GameTest {
     }
 
     @Test
-    public void isValidMove_Works() {
-        for (int i = 0; i < Game.COLUMN_COUNT; i++) {
-            assertTrue(this.game.isMoveLegal(i));
-        }
-        assertFalse(this.game.isMoveLegal(Game.COLUMN_COUNT + 1));
-        assertFalse(this.game.isMoveLegal(-1));
+    public void testIsMoveLegal() {
+        assertTrue(this.game.isLegalMove(0));
+        assertTrue(this.game.isLegalMove(1));
+        assertTrue(this.game.isLegalMove(2));
+        assertTrue(this.game.isLegalMove(3));
+        assertTrue(this.game.isLegalMove(4));
+        assertTrue(this.game.isLegalMove(5));
+        assertTrue(this.game.isLegalMove(6));
+
+        assertFalse(this.game.isLegalMove(-1));
+        assertFalse(this.game.isLegalMove(7));
+    }
+
+    @Test
+    public void testMakeMove() {
+        assertEquals(Tile.Player, this.game.getCurrentPlayer());
+        this.game.makeMove(0);
+        assertEquals(Tile.Opponent, this.game.getCurrentPlayer());
+        this.game.makeMove(0);
+        assertEquals(Tile.Player, this.game.getCurrentPlayer());
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.game.makeMove(-1);
+        });
+
+        this.game.makeMove(0);
+        this.game.makeMove(0);
+        this.game.makeMove(0);
+        this.game.makeMove(0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.game.makeMove(0);
+        });
+    }
+
+    @Test
+    public void testIsGameOver() {
+        assertFalse(this.game.isGameOver());
+    }
+
+    @Test
+    public void testGetWinner() {
+        assertThrows(IllegalStateException.class, () -> {
+            this.game.getWinner();
+        });
+
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+
+        assertEquals(Tile.Player, this.game.getWinner());
     }
 }
