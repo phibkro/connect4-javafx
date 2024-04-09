@@ -1,15 +1,19 @@
 package connect4.models;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Game implements VectorGame {
   public static final int HEIGHT = 6;
   public static final int WIDTH = 7;
   private Token currentPlayer = Token.Player;
+  private List<Integer> moveHistory;
   private Token[] board = new Token[WIDTH * HEIGHT];
 
   public Game() {
+    this.moveHistory = new ArrayList<>();
+
     Arrays.fill(this.board, Token.None);
   }
 
@@ -45,6 +49,7 @@ public class Game implements VectorGame {
       }
     }
 
+    this.moveHistory.add(column);
     this.alternatePlayer();
   }
 
@@ -91,15 +96,31 @@ public class Game implements VectorGame {
   }
 
   @Override
-  public void loadGame(File file) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'loadGame'");
+  public void loadMoveHistory(String moveHistory) {
+    this.moveHistory = new ArrayList<>();
+    Arrays.fill(this.board, Token.None);
+
+    for (char rawColumnIndex : moveHistory.toCharArray()) {
+      int columnIndex = Character.getNumericValue(rawColumnIndex);
+
+      this.moveHistory.add(columnIndex);
+      this.makeMove(columnIndex);
+    }
   }
 
   @Override
-  public File saveGame() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'saveGame'");
+  public String extractMoveHistory() {
+    if (this.moveHistory.size() == 0) {
+      return "";
+    }
+
+    StringBuilder moveHistory = new StringBuilder();
+
+    for (int columnIndex : this.moveHistory) {
+      moveHistory.append(columnIndex);
+    }
+
+    return moveHistory.toString();
   }
 
   private void alternatePlayer() {
