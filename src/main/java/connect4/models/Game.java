@@ -3,8 +3,9 @@ package connect4.models;
 import java.util.Arrays;
 
 public class Game implements VectorGame {
-  private final int BOARD_WIDTH = 7;
-  private final int BOARD_HEIGHT = 6;
+  public static final int BOARD_WIDTH = 7;
+  public static final int BOARD_HEIGHT = 6;
+  public static final int BOARD_SIZE = BOARD_WIDTH * BOARD_HEIGHT;
   private Tile[] board = new Tile[BOARD_WIDTH * BOARD_HEIGHT];
   private Tile currentPlayer;
 
@@ -13,24 +14,12 @@ public class Game implements VectorGame {
     this.currentPlayer = Tile.Player;
   }
 
-  public int getBoardWidth() {
-    return this.BOARD_WIDTH;
-  }
-
-  public int getBoardHeight() {
-    return this.BOARD_HEIGHT;
-  }
-
-  public int getBoardSize() {
-    return this.BOARD_WIDTH * this.BOARD_HEIGHT;
-  }
-
   public Tile getCurrentPlayer() {
     return this.currentPlayer;
   }
 
   public boolean isValidMove(int column) {
-    BoardHelper boardHelper = new BoardHelper(this.BOARD_WIDTH, this.BOARD_HEIGHT, this.board);
+    BoardHelper boardHelper = new BoardHelper(BOARD_WIDTH, BOARD_HEIGHT, this.board);
     Tile[] highestRow = boardHelper.getRow(0);
 
     return highestRow[column] == Tile.Empty;
@@ -41,7 +30,7 @@ public class Game implements VectorGame {
       throw new IllegalArgumentException("Invalid move to column " + column);
     }
 
-    BoardHelper boardHelper = new BoardHelper(this.BOARD_WIDTH, this.BOARD_HEIGHT, this.board);
+    BoardHelper boardHelper = new BoardHelper(BOARD_WIDTH, BOARD_HEIGHT, this.board);
     Tile[] selectedColumn = boardHelper.getColumn(column);
 
     for (int row = BOARD_HEIGHT - 1; row >= 0; row--) {
