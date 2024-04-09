@@ -52,6 +52,31 @@ General game logic like checking for illegal moves shall be tested, as well as i
 
 ### Diagram - TODO
 
+```mermaid
+flowchart TB
+  View-.->Controller
+  Controller-.->Interface
+  Interface -.-> Game
+  View -.-> Game
+  Controller-.->Data
+
+  subgraph UserInterface
+    View[FXML]
+    Controller
+  end
+
+  subgraph GameLogic
+    Interface
+    subgraph Models
+      Game[Game]
+    end
+  end
+
+subgraph PersistentData
+  Data[(Files)]
+end
+```
+
 ### Questions - TODO
 
 ## Credits
