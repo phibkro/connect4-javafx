@@ -128,13 +128,13 @@ public class Controller implements Initializable {
     }
   }
 
-  private void handleGameOver(Tile winner) {
+  private void handleGameOver(Token winner) {
     for (Button btn : this.gameBtns) {
       btn.setDisable(true);
       btn.setOnAction(null);
     }
     switch (winner) {
-      case Empty:
+      case None:
         this.output.setText("It's a stalemate!");
         break;
       case Player:
@@ -150,15 +150,22 @@ public class Controller implements Initializable {
   }
 
   @FXML
-  private void openFileDialog(ActionEvent event) {
+  private void loadGame(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(this.board.getScene().getWindow());
-
+    this.output.setText(String.format("%s selected", file.getPath()));
     // TODO
     // this.game = new Game(file);
     // or
     // this.game = new Game();
     // this.game.loadGame(file);
+  }
+
+  @FXML
+  private void saveGame(ActionEvent event) {
+    FileChooser fileChooser = new FileChooser();
+    File file = fileChooser.showSaveDialog(this.board.getScene().getWindow());
+    this.output.setText(String.format("%s selected", file.getPath()));
   }
 
   @FXML

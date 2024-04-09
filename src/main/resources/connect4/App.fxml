@@ -35,8 +35,8 @@
             <FlowPane alignment="CENTER" hgap="10.0" prefHeight="50.0" prefWidth="700.0">
                <children>
                   <Button fx:id="btnStartGame" mnemonicParsing="false" onAction="#startNewGame" text="New game" />
-                  <Button fx:id="btnLoadGame" mnemonicParsing="false" onAction="#openFileDialog" text="Load game" />
-                  <Button fx:id="btnSaveGame" mnemonicParsing="false" text="Save game" />
+                  <Button fx:id="btnLoadGame" mnemonicParsing="false" onAction="#loadGame" text="Load game" />
+                  <Button fx:id="btnSaveGame" mnemonicParsing="false" onAction="#saveGame" text="Save game" />
                </children>
             </FlowPane>
          </children>
