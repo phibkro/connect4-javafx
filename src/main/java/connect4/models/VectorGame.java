@@ -5,9 +5,9 @@ import java.io.File;
 public interface VectorGame {
   void makeMove(int column);
 
-  boolean isValidMove(int column);
+  boolean isMoveLegal(int column);
 
-  boolean[] getValidMoves();
+  boolean[] getLegalMoves();
 
   Tile isWon();
 
