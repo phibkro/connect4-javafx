@@ -1,8 +1,12 @@
 package connect4.models;
 
 public class BoardHelper {
-    public static final int[][] DIRECTIONS = { { 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, { 1, 1 }, { 1, -1 }, { -1, 1 },
-            { -1, -1 } };
+    public static final int[][] DIRECTIONS = {
+            { 0, 1 }, { 0, -1 }, // →, ←
+            { 1, 0 }, { -1, 0 }, // ↓, ↑
+            { 1, 1 }, { -1, -1 }, // ↘, ↖
+            { -1, 1 }, { 1, -1 } // ↗, ↙
+    };
     public int BOARD_WIDTH;
     public int BOARD_HEIGHT;
     public Token[] board;
@@ -46,29 +50,28 @@ public class BoardHelper {
             throw new IllegalArgumentException("`n` must be between 1 or more");
         }
 
-        int inARow = 1;
-
         for (int[] direction : BoardHelper.DIRECTIONS) {
-            int rowDirection = direction[0];
             int columnDirection = direction[1];
+            int rowDirection = direction[0];
+            int inARow = 1;
 
             for (int index = 1; index < n; index++) {
-                int newRow = row + rowDirection * index;
-                int newColumn = column + columnDirection * index;
+                int columnToTest = column + columnDirection * index;
+                int rowToTest = row + rowDirection * index;
 
-                if (newRow < 0 || newRow >= this.BOARD_HEIGHT || newColumn < 0 || newColumn >= this.BOARD_WIDTH) {
+                if (rowToTest < 0 || rowToTest >= this.BOARD_HEIGHT || columnToTest < 0
+                        || columnToTest >= this.BOARD_WIDTH) {
                     break;
                 }
 
-                if (getToken(newRow, newColumn) == token) {
-                    inARow++;
+                if (getToken(rowToTest, columnToTest) == token) {
+                    if (++inARow == n) {
+                        return true;
+                    }
                 } else {
-                    inARow = 0;
+                    break;
                 }
 
-                if (inARow == n) {
-                    return true;
-                }
             }
         }
 
