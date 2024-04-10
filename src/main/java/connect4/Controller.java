@@ -1,14 +1,11 @@
 package connect4;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import connect4.models.Game;
 import connect4.models.Token;
