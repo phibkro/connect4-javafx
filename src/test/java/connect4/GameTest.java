@@ -19,6 +19,42 @@ public class GameTest {
         this.game = new Game();
     }
 
+    // Test game logic correct state handling
+    @Test
+    public void currentPlayerAlternates_onMove() throws Exception {
+        Token evenPlayer = this.game.getCurrentPlayer();
+        Token oddPlayer;
+        switch (evenPlayer) {
+            case Player:
+                oddPlayer = Token.Opponent;
+                break;
+            case Opponent:
+                oddPlayer = Token.Player;
+                break;
+            case None:
+                throw new Exception(String.format("Starting player cannot be %s", Token.None.toString()));
+            default:
+                throw new Exception("Starting player cannot be Null");
+        }
+
+        int x = 0;
+        while (this.game.isLegalMove(x)) {
+            if (x % 2 == 0) {
+                assertEquals(this.game.getCurrentPlayer(), evenPlayer);
+            } else {
+                assertEquals(this.game.getCurrentPlayer(), oddPlayer);
+            }
+            this.game.makeMove(x);
+            if (x == 7) {
+                x = 0;
+            } else {
+                x++;
+            }
+        }
+    }
+
+    // Unit test Game methods
+    // .getCurrentPlayer()
     @Test
     public void currentPlayer_StartsAs_Player() {
         assertEquals(Token.Player, this.game.getCurrentPlayer());
