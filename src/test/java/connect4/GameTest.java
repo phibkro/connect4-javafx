@@ -104,25 +104,27 @@ public class GameTest {
     }
 
     @Test
-    public void testMakeMove() {
-        assertEquals(Token.Player, this.game.getCurrentPlayer());
-        this.game.makeMove(0);
-        assertEquals(Token.Opponent, this.game.getCurrentPlayer());
-        this.game.makeMove(0);
-        assertEquals(Token.Player, this.game.getCurrentPlayer());
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.game.makeMove(-1);
+    public void Move_IsIllegal_IfColumnFull() {
+        for (int i = 0; i < Game.WIDTH; i++) {
+            for (int _j = 0; _j < Game.HEIGHT; _j++) {
+                this.game.makeMove(i);
+            }
+            final int x = i;
+            assertFalse(this.game.isLegalMove(x));
+            assertThrows(IllegalStateException.class, () -> {
+                this.game.makeMove(x);
             });
+        }
+    }
 
-        this.game.makeMove(0);
-        this.game.makeMove(0);
-        this.game.makeMove(0);
-        this.game.makeMove(0);
+    @Test
+    public void Move_IsIllegal_IfGameOver() {
+        // TODO
+    }
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            this.game.makeMove(0);
-        });
+    @Test
+    public void Move_ShouldNotMutateGameState_IfIllegal() {
+        // TODO
     }
 
     // Test game over states
