@@ -37,8 +37,12 @@ public class Game implements VectorGame {
 
   @Override
   public void makeMove(int column) throws IllegalArgumentException {
+    if (column < 0 || column >= Game.WIDTH) {
+      throw new IllegalArgumentException("Invalid move to column " + column);
+    }
+
     if (!this.isLegalMove(column)) {
-      throw new IllegalArgumentException("Illegal or invalid move to column " + column);
+      throw new IllegalStateException("Illegal move to column " + column);
     }
 
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
