@@ -1,19 +1,24 @@
 package connect4.models;
 
 public class BoardHelper {
-    public static final int[][] DIRECTIONS = {
-            { 0, 1 }, { 0, -1 }, // →, ←
-            { 1, 0 }, { -1, 0 }, // ↓, ↑
-            { 1, 1 }, { -1, -1 }, // ↘, ↖
-            { -1, 1 }, { 1, -1 } // ↗, ↙
+    /**
+     * Represents every direction you can move from any cell on a board.
+     * The directions are represented as { row, column } pairs as follows, where
+     * each integer is either -1, 0, or 1.
+     */
+    private static final int[][] DIRECTIONS = {
+            { +0, +1 }, { +0, -1 }, // →, ←
+            { +1, +0 }, { -1, +0 }, // ↓, ↑
+            { +1, +1 }, { -1, -1 }, // ↘, ↖
+            { -1, +1 }, { +1, -1 }, // ↗, ↙
     };
+    private Token[] board;
     public int BOARD_WIDTH;
     public int BOARD_HEIGHT;
-    public Token[] board;
 
-    public BoardHelper(int BOARD_HEIGHT, int BOARD_WIDTH, Token[] board) {
-        this.BOARD_HEIGHT = BOARD_HEIGHT;
-        this.BOARD_WIDTH = BOARD_WIDTH;
+    public BoardHelper(int boardHeight, int boardWidth, Token[] board) {
+        this.BOARD_HEIGHT = boardHeight;
+        this.BOARD_WIDTH = boardWidth;
         this.board = board;
     }
 
@@ -33,7 +38,7 @@ public class BoardHelper {
         Token[] chosenRow = new Token[this.BOARD_WIDTH];
 
         for (int column = 0; column < this.BOARD_WIDTH; column++) {
-            chosenRow[column] = getToken(row, column);
+            chosenRow[column] = this.getToken(row, column);
         }
 
         return chosenRow;
@@ -55,7 +60,7 @@ public class BoardHelper {
         Token[] chosenColumn = new Token[this.BOARD_HEIGHT];
 
         for (int row = 0; row < this.BOARD_HEIGHT; row++) {
-            chosenColumn[row] = getToken(row, column);
+            chosenColumn[row] = this.getToken(row, column);
         }
 
         return chosenColumn;
@@ -80,19 +85,30 @@ public class BoardHelper {
      * @throws IllegalArgumentException if `n` is less than 1.
      */
     public boolean isNInARow(int originRow, int originColumn, int n) {
-        if (this.rowOutOfBounds(originRow) || this.columnOutOfBounds(originColumn)) {
-            throw new IllegalArgumentException("`originRow` or `originColumn` is out of bounds");
+        if (this.rowOutOfBounds(originRow)) {
+            throw new IllegalArgumentException("Index `originRow` is out of bounds");
+        }
+
+        if (this.columnOutOfBounds(originColumn)) {
+            throw new IllegalArgumentException("Index `originColumn` is out of bounds");
         }
 
         if (n < 1) {
             throw new IllegalArgumentException("`n` must be between 1 or more");
         }
 
-        Token originToken = getToken(originRow, originColumn);
+        // The origin token is always in a row with itself.
+        if (n == 1) {
+            return true;
+        }
+
+        Token originToken = this.getToken(originRow, originColumn);
 
         for (int[] direction : BoardHelper.DIRECTIONS) {
             int columnDirection = direction[1];
             int rowDirection = direction[0];
+
+            // The origin token is always in a row with itself, so we start at 1.
             int inARow = 1;
 
             for (int index = 1; index < n; index++) {
@@ -103,14 +119,13 @@ public class BoardHelper {
                     break;
                 }
 
-                if (getToken(rowToTest, columnToTest) == originToken) {
-                    if (++inARow == n) {
-                        return true;
-                    }
-                } else {
+                if (this.getToken(rowToTest, columnToTest) != originToken) {
                     break;
                 }
 
+                if (++inARow == n) {
+                    return true;
+                }
             }
         }
 
@@ -118,29 +133,39 @@ public class BoardHelper {
     }
 
     /**
-     * Unsafely retrieves the token at the specified position on the board.
+     * Retrieves the token at the specified position on the board.
      *
      * @param row    - the row index of the token (0-indexed, where 0 is the top
      *               row).
      * @param column - the column index of the token (0-indexed, where 0 is the
      *               leftmost column).
      * @return the token at the specified position.
-     * @throws ArrayIndexOutOfBoundsException if the `row` or `column` is out of
-     *                                        bounds.
+     * @throws IllegalArgumentException if `row` or `column` is out of bounds.
      */
     public Token getToken(int row, int column) {
-        return this.board[translate(row, column)];
+        if (this.rowOutOfBounds(row)) {
+            throw new IllegalArgumentException("index `row` is out of bounds");
+        }
+
+        if (this.columnOutOfBounds(column)) {
+            throw new IllegalArgumentException("index `column` is out of bounds");
+        }
+
+        return this.board[this.translate(row, column)];
     }
 
     /**
-     * Unsafely retrieves the token at the specified position on the board.
+     * Retrieves the token at the specified position on the board.
      *
      * @param index - the raw index of the token.
      * @return the token at the specified position.
-     * @throws ArrayIndexOutOfBoundsException if the `row` or `column` is out of
-     *                                        bounds.
+     * @throws IllegalArgumentException if `index` is out of bounds.
      */
     public Token getToken(int index) {
+        if (index < 0 || index >= this.board.length) {
+            throw new IllegalArgumentException("`index` is out of bounds");
+        }
+
         return this.board[index];
     }
 
