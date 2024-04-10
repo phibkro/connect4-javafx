@@ -1,6 +1,10 @@
 package connect4;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -68,8 +72,6 @@ public class Controller implements Initializable {
       btn.setPrefWidth(COLUMN_WIDTH);
       btn.setPrefHeight(COLUMN_HEIGHT);
       btn.setOpacity(0.50);
-      // Add color
-      btn.setDefaultButton(true);
 
       // Add elements to app
       this.board.getChildren().add(stackPane);
@@ -83,44 +85,48 @@ public class Controller implements Initializable {
       final int x = i;
 
       btn.setOnAction(e -> {
-        if (this.game.isLegalMove(x)) {
-          // Copy current player before we make move
-          final Token currentPlayer = this.game.getCurrentPlayer();
-
-          // Only make move if move is legal
-          this.game.makeMove(x);
-
-          // Update ui
-          this.output.setText(String.format("%s, it is your turn!", this.game.getCurrentPlayer()));
-          Circle circle = new Circle(TILE_SIZE / 2);
-          switch (currentPlayer) {
-            case Player:
-              circle.setFill(Color.PURPLE);
-              break;
-            case Opponent:
-              circle.setFill(Color.ORANGE);
-              break;
-            default:
-              System.err.println("This shouldn't happen");
-              break;
-          }
-          // Place disk in app
-          this.columns[x].getChildren().add(circle);
-
-          // Disable btn and remove event handler if the next move is illegal
-          if (!this.game.isLegalMove(x)) {
-            btn.setDisable(true);
-            btn.setOnAction(null);
-          }
-
-          if (this.game.isGameOver()) {
-            this.handleGameOver(this.game.getWinner());
-          }
-        } else {
-          // This shouldn't happen as the event handler is removed
-          System.err.println("wtf");
-        }
+        this.makeMove(x);
       });
+    }
+  }
+
+  private void makeMove(int column) {
+    if (this.game.isLegalMove(column)) {
+      // Copy current player before we make move
+      final Token currentPlayer = this.game.getCurrentPlayer();
+
+      // Only make move if move is legal
+      this.game.makeMove(column);
+
+      // Update ui
+      this.output.setText(String.format("%s, it is your turn!", this.game.getCurrentPlayer()));
+      Circle circle = new Circle(TILE_SIZE / 2);
+      switch (currentPlayer) {
+        case Player:
+          circle.setFill(Color.PURPLE);
+          break;
+        case Opponent:
+          circle.setFill(Color.ORANGE);
+          break;
+        default:
+          System.err.println("This shouldn't happen");
+          break;
+      }
+      // Place disk in app
+      this.columns[column].getChildren().add(circle);
+
+      // Disable btn and remove event handler if the next move is illegal
+      if (!this.game.isLegalMove(column)) {
+        this.gameBtns[column].setDisable(true);
+        this.gameBtns[column].setOnAction(null);
+      }
+
+      if (this.game.isGameOver()) {
+        this.handleGameOver(this.game.getWinner());
+      }
+    } else {
+      // This shouldn't happen as the event handler is removed
+      System.err.println("wtf");
     }
   }
 
@@ -149,7 +155,43 @@ public class Controller implements Initializable {
   private void loadGame(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showOpenDialog(this.board.getScene().getWindow());
-    this.output.setText(String.format("%s selected", file.getPath()));
+    if (file == null) {
+      // User cancelled
+      return;
+    }
+    Game oldGame = this.game;
+    this.game = new Game();
+    try {
+      FileReader fileReader = new FileReader(file);
+      this.output.setText(String.format("%s selected", file.getPath()));
+
+      // Validate file
+      try {
+        int c = fileReader.read();
+        while (c != -1) {
+          if (this.game.isLegalMove(c)) {
+            this.game.makeMove(c);
+          } else {
+            throw new IOException("Error: Cannot load file. Chosen file may illegal moves.");
+          }
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+        this.output.setText(e.getMessage());
+        this.game = oldGame;
+      } finally {
+        try {
+          fileReader.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+          this.output.setText("Error: Could not close file.");
+        }
+      }
+
+    } catch (FileNotFoundException e) {
+      e.printStackTrace();
+      this.output.setText("Error: File not found.");
+    }
     this.game = new Game();
     this.game.loadGame(file);
   }
@@ -158,12 +200,19 @@ public class Controller implements Initializable {
   private void saveGame(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     File file = fileChooser.showSaveDialog(this.board.getScene().getWindow());
+    if (file == null) {
+      // User cancelled
+      return;
+    }
     try {
-      this.game.saveGame(file);
+      String moveHistory = this.game.extractMoveHistory();
+      FileWriter fileWriter = new FileWriter(file);
+      fileWriter.write(moveHistory);
+      fileWriter.close();
       this.output.setText(String.format("Saved to %s", file.getPath()));
     } catch (Exception e) {
       e.printStackTrace();
-      this.output.setText("Couldn't save game");
+      this.output.setText("Error: Could not save game.");
     }
   }
 
