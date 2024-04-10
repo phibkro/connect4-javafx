@@ -79,18 +79,28 @@ public class GameTest {
         assertThrows(Exception.class, () -> this.game.getCurrentPlayer());
     }
 
+    // Test Game.isLegalMove & Game.makeMove
+    // Test these together since their behavior is equivalent
+    // When makeMove throws isLegalMove returns false
     @Test
-    public void testIsMoveLegal() {
-        assertTrue(this.game.isLegalMove(0));
-        assertTrue(this.game.isLegalMove(1));
-        assertTrue(this.game.isLegalMove(2));
-        assertTrue(this.game.isLegalMove(3));
-        assertTrue(this.game.isLegalMove(4));
-        assertTrue(this.game.isLegalMove(5));
-        assertTrue(this.game.isLegalMove(6));
-
+    public void Move_IsIllegal_IfInputIsNegative() {
         assertFalse(this.game.isLegalMove(-1));
-        assertFalse(this.game.isLegalMove(7));
+        assertThrows(Exception.class, () -> this.game.makeMove(-1));
+    }
+
+    @Test
+    public void Move_IsIllegal_IfInputLargerThanWidth() {
+        assertFalse(this.game.isLegalMove(Game.WIDTH + 1));
+        assertThrows(Exception.class, () -> this.game.makeMove(Game.WIDTH + 1));
+    }
+
+    @Test
+    public void Move_IsLegal_IfInputLessThanWidth() {
+        int x = 0;
+        while (x < Game.WIDTH) {
+            assertTrue(this.game.isLegalMove(x));
+            x++;
+        }
     }
 
     @Test
