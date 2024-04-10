@@ -184,17 +184,11 @@ public class GameTest {
     }
 
     @Test
-    public void testExtractMoveHistory() {
-        this.game.makeMove(0);
-        this.game.makeMove(1);
-        this.game.makeMove(0);
-        this.game.makeMove(2);
-        this.game.makeMove(6);
-        this.game.makeMove(0);
-        this.game.makeMove(0);
-
-        String moveHistory = this.game.extractMoveHistory();
-
-        assertEquals("0102600", moveHistory);
+    public void extractMoveHistory_ReturnsCorrectMoveHistory() {
+        String moveSequence = "0102600";
+        moveSequence.chars().forEach(c -> {
+            this.game.makeMove(c - 48);
+        });
+        assertEquals(moveSequence, this.game.extractMoveHistory());
     }
 }
