@@ -19,9 +19,16 @@ public class GameTest {
         this.game = new Game();
     }
 
+    // Example for test naming: Functionality_ExpectedBehavior_StateUnderTest
+    // or for unit testing: MethodName_ExpectedBehavior_StateUnderTest
     // Test game logic correct state handling
     @Test
-    public void currentPlayerAlternates_onMove() throws Exception {
+    public void CurrentPlayer_StartsAs_Player() {
+        assertEquals(Token.Player, this.game.getCurrentPlayer());
+    }
+
+    @Test
+    public void CurrentPlayer_ShouldAlternate_OnMove() throws Exception {
         Token evenPlayer = this.game.getCurrentPlayer();
         Token oddPlayer;
         switch (evenPlayer) {
@@ -55,9 +62,21 @@ public class GameTest {
 
     // Unit test Game methods
     // .getCurrentPlayer()
+
     @Test
-    public void currentPlayer_StartsAs_Player() {
-        assertEquals(Token.Player, this.game.getCurrentPlayer());
+    public void getCurrentPlayer_Throws_IfGameOver() {
+        int x = 0;
+        while (!this.game.isGameOver()) {
+            if (this.game.isLegalMove(x)) {
+                this.game.makeMove(x);
+            }
+            if (x == 7) {
+                x = 0;
+            } else {
+                x++;
+            }
+        }
+        assertThrows(Exception.class, () -> this.game.getCurrentPlayer());
     }
 
     @Test
