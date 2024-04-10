@@ -125,9 +125,23 @@ public class GameTest {
         });
     }
 
+    // Test game over states
     @Test
-    public void testIsGameOver() {
-        assertFalse(this.game.isGameOver());
+    public void Game_IsNotOver_IfPossibleToMove() {
+        int x = 0;
+        while (this.game.isLegalMove(x)) {
+            assertFalse(this.game.isGameOver());
+            x++;
+        }
+    }
+
+    @Test
+    public void Game_IsOver_IfWon() {
+        // TODO
+    }
+
+    @Test
+    public void Game_IsOver_IfBoardIsFull() {
     }
 
     @Test
