@@ -20,7 +20,7 @@ public class GameTest {
     }
 
     @Test
-    public void testGetCurrentPlayer() {
+    public void currentPlayer_StartsAs_Player() {
         assertEquals(Token.Player, this.game.getCurrentPlayer());
     }
 
