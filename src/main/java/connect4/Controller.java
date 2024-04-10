@@ -1,12 +1,14 @@
 package connect4;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import connect4.models.Game;
 import connect4.models.Token;
@@ -159,41 +161,37 @@ public class Controller implements Initializable {
       // User cancelled
       return;
     }
-    Game oldGame = this.game;
-    this.game = new Game();
-    try {
-      FileReader fileReader = new FileReader(file);
-      this.output.setText(String.format("%s selected", file.getPath()));
+    Game newGame = new Game();
+    try (FileReader reader = new FileReader(file)) {
+      this.output.setText(String.format("Loading... %s", file.getPath()));
 
       // Validate file
-      try {
-        int c = fileReader.read();
-        while (c != -1) {
-          if (this.game.isLegalMove(c)) {
-            this.game.makeMove(c);
-          } else {
-            throw new IOException("Error: Cannot load file. Chosen file may illegal moves.");
-          }
-        }
-      } catch (IOException e) {
-        e.printStackTrace();
-        this.output.setText(e.getMessage());
-        this.game = oldGame;
-      } finally {
-        try {
-          fileReader.close();
-        } catch (Exception e) {
-          e.printStackTrace();
-          this.output.setText("Error: Could not close file.");
+      int c;
+      while ((c = reader.read() - 48) > -1) {
+        if (newGame.isLegalMove(c)) {
+          newGame.makeMove(c);
+        } else {
+          throw new IOException("Error: Cannot load file. Chosen file may illegal moves.");
         }
       }
+      try (FileReader newReader = new FileReader(file)) {
+        // File validated, load game
+        this.game = new Game();
+        this.resetBoard();
 
-    } catch (FileNotFoundException e) {
+        int d;
+        while ((d = newReader.read() - 48) > -1) {
+          this.makeMove(d);
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+        this.output.setText(e.getMessage());
+      }
+    } catch (Exception e) {
       e.printStackTrace();
-      this.output.setText("Error: File not found.");
+      this.output.setText(e.getMessage());
     }
-    this.game = new Game();
-    this.game.loadGame(file);
+
   }
 
   @FXML
@@ -204,11 +202,9 @@ public class Controller implements Initializable {
       // User cancelled
       return;
     }
-    try {
+    try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
       String moveHistory = this.game.extractMoveHistory();
-      FileWriter fileWriter = new FileWriter(file);
-      fileWriter.write(moveHistory);
-      fileWriter.close();
+      fileOutputStream.write(moveHistory.getBytes());
       this.output.setText(String.format("Saved to %s", file.getPath()));
     } catch (Exception e) {
       e.printStackTrace();
