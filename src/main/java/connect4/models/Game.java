@@ -55,7 +55,7 @@ public class Game implements VectorGame {
    *                                  state (column full).
    */
   @Override
-  public void makeMove(int column) throws IllegalArgumentException {
+  public void makeMove(int column) throws IllegalArgumentException, IllegalStateException {
     if (column < 0 || column >= Game.WIDTH) {
       throw new IllegalArgumentException("Invalid move to out-of-bounds column " + column);
     }
