@@ -141,19 +141,6 @@ public class Game implements VectorGame {
   }
 
   @Override
-  public void loadGame(String moveHistory) {
-    this.moveHistory = new ArrayList<>();
-    Arrays.fill(this.board, Token.None);
-
-    for (char rawColumnIndex : moveHistory.toCharArray()) {
-      int columnIndex = Character.getNumericValue(rawColumnIndex);
-
-      this.moveHistory.add(columnIndex);
-      this.makeMove(columnIndex);
-    }
-  }
-
-  @Override
   public String extractMoveHistory() {
     if (this.moveHistory.size() == 0) {
       return "";
