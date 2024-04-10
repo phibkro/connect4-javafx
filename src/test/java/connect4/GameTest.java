@@ -118,13 +118,15 @@ public class GameTest {
     }
 
     @Test
-    public void Move_IsIllegal_IfGameOver() {
+    public void Move_IsIllegal_IfGameOver() throws Exception {
         // TODO
+        throw new Exception("Test not implemented");
     }
 
     @Test
-    public void Move_ShouldNotMutateGameState_IfIllegal() {
+    public void Move_ShouldNotMutateGameState_IfIllegal() throws Exception {
         // TODO
+        throw new Exception("Test not implemented");
     }
 
     // Test game over states
@@ -138,12 +140,15 @@ public class GameTest {
     }
 
     @Test
-    public void Game_IsOver_IfWon() {
+    public void Game_IsOver_IfWon() throws Exception {
         // TODO
+        throw new Exception("Test not implemented");
     }
 
     @Test
-    public void Game_IsOver_IfBoardIsFull() {
+    public void Game_IsOver_IfBoardIsFull() throws Exception {
+        // TODO
+        throw new Exception("Test not implemented");
     }
 
     @Test
@@ -167,8 +172,9 @@ public class GameTest {
     }
 
     @Test
-    public void getWinner_ReturnsNone_IfStaleMate() {
+    public void getWinner_ReturnsNone_IfStaleMate() throws Exception {
         // TODO
+        throw new Exception("Test not implemented");
     }
 
     @Test
