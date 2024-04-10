@@ -1,7 +1,5 @@
 package connect4.models;
 
-import java.io.File;
-
 public interface VectorGame {
   /**
    * Makes a move in the specified column.
