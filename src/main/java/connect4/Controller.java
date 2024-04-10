@@ -164,6 +164,8 @@ public class Controller implements Initializable {
 
       // Validate file
       int c;
+      // (reader.read() - 48) to convert from ASCII code points to int
+      // (c > -1) because reader.read() returns -1 if there is no more to read
       while ((c = reader.read() - 48) > -1) {
         if (newGame.isLegalMove(c)) {
           newGame.makeMove(c);
@@ -180,9 +182,6 @@ public class Controller implements Initializable {
         while ((d = newReader.read() - 48) > -1) {
           this.makeMove(d);
         }
-      } catch (Exception e) {
-        e.printStackTrace();
-        this.output.setText(e.getMessage());
       }
     } catch (Exception e) {
       e.printStackTrace();
