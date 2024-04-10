@@ -76,7 +76,7 @@ public class GameTest {
                 x++;
             }
         }
-        assertThrows(Exception.class, () -> this.game.getCurrentPlayer());
+        assertThrows(IllegalStateException.class, () -> this.game.getCurrentPlayer());
     }
 
     // Test Game.isLegalMove & Game.makeMove
@@ -85,13 +85,13 @@ public class GameTest {
     @Test
     public void Move_IsIllegal_IfInputIsNegative() {
         assertFalse(this.game.isLegalMove(-1));
-        assertThrows(Exception.class, () -> this.game.makeMove(-1));
+        assertThrows(IllegalArgumentException.class, () -> this.game.makeMove(-1));
     }
 
     @Test
     public void Move_IsIllegal_IfInputLargerThanWidth() {
         assertFalse(this.game.isLegalMove(Game.WIDTH + 1));
-        assertThrows(Exception.class, () -> this.game.makeMove(Game.WIDTH + 1));
+        assertThrows(IllegalArgumentException.class, () -> this.game.makeMove(Game.WIDTH + 1));
     }
 
     @Test
@@ -113,7 +113,7 @@ public class GameTest {
 
         assertThrows(IllegalArgumentException.class, () -> {
             this.game.makeMove(-1);
-        });
+            });
 
         this.game.makeMove(0);
         this.game.makeMove(0);
@@ -145,11 +145,14 @@ public class GameTest {
     }
 
     @Test
-    public void testGetWinner() {
+    public void getWinner_Throws_IfGameNotOver() {
         assertThrows(IllegalStateException.class, () -> {
             this.game.getWinner();
         });
+    }
 
+    @Test
+    public void getWinner_ReturnsWinner_IfGameOver() {
         this.game.makeMove(0);
         this.game.makeMove(1);
         this.game.makeMove(0);
@@ -159,6 +162,11 @@ public class GameTest {
         this.game.makeMove(0);
 
         assertEquals(Token.Player, this.game.getWinner());
+    }
+
+    @Test
+    public void getWinner_ReturnsNone_IfStaleMate() {
+        // TODO
     }
 
     @Test
