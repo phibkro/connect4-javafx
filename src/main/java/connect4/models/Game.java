@@ -19,10 +19,19 @@ public class Game implements VectorGame {
     Arrays.fill(this.board, Token.None);
   }
 
+  /**
+   * Returns the player to make the next move in the game.
+   */
   public Token getCurrentPlayer() {
     return this.currentPlayer;
   }
 
+  /**
+   * Checks if a move is legal in the game.
+   *
+   * @param column - The column index to check.
+   * @return true if the move is legal, false otherwise.
+   */
   @Override
   public boolean isLegalMove(int column) {
     if (column < 0 || column >= Game.WIDTH) {
@@ -35,14 +44,24 @@ public class Game implements VectorGame {
     return highestRow[column] == Token.None;
   }
 
+  /**
+   * Makes a move in the game by dropping the correct token into the specified
+   * column.
+   * 
+   * @param column - The column index where the token should be dropped.
+   * @throws IllegalArgumentException if the specified column is invalid (out of
+   *                                  bounds).
+   * @throws IllegalStateException    if the move is illegal in the current game
+   *                                  state (column full).
+   */
   @Override
   public void makeMove(int column) throws IllegalArgumentException {
     if (column < 0 || column >= Game.WIDTH) {
-      throw new IllegalArgumentException("Invalid move to column " + column);
+      throw new IllegalArgumentException("Invalid move to out-of-bounds column " + column);
     }
 
     if (!this.isLegalMove(column)) {
-      throw new IllegalStateException("Illegal move to column " + column);
+      throw new IllegalStateException("Illegal move to full column " + column);
     }
 
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
@@ -59,6 +78,12 @@ public class Game implements VectorGame {
     this.alternatePlayer();
   }
 
+  /**
+   * Checks if the game is over. The game is over if someone has won or if every
+   * cell is filled (stalemate).
+   * 
+   * @return true if the game is over, false otherwise.
+   */
   @Override
   public boolean isGameOver() {
     BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
@@ -75,7 +100,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isNInARow(token, row, column, Game.WINNING_LENGTH)) {
+        if (boardHelper.isNInARow(row, column, Game.WINNING_LENGTH)) {
           return true;
         }
       }
@@ -84,6 +109,12 @@ public class Game implements VectorGame {
     return false;
   }
 
+  /**
+   * Gets the winner of the game. If the game is not over, an exception is thrown.
+   * 
+   * @return the winner of the game, where `None` represents a stalemate.
+   * @throws IllegalStateException if the game is not over.
+   */
   @Override
   public Token getWinner() {
     if (!this.isGameOver()) {
@@ -100,7 +131,7 @@ public class Game implements VectorGame {
           continue;
         }
 
-        if (boardHelper.isNInARow(token, row, column, Game.WINNING_LENGTH)) {
+        if (boardHelper.isNInARow(row, column, Game.WINNING_LENGTH)) {
           return token;
         }
       }
@@ -137,6 +168,10 @@ public class Game implements VectorGame {
     return moveHistory.toString();
   }
 
+  /**
+   * Alternates the player to make the next move in the game between Player and
+   * Opponent.
+   */
   private void alternatePlayer() {
     this.currentPlayer = this.getCurrentPlayer() == Token.Player ? Token.Opponent : Token.Player;
   }
