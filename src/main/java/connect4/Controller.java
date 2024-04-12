@@ -1,8 +1,6 @@
 package connect4;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,7 +39,13 @@ public class Controller implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    this.startNewGame(null);
+    this.startNewGame();
+  }
+
+  @FXML
+  public void startNewGame() {
+    this.game = new Game();
+    this.resetBoard();
   }
 
   private void resetBoard() {
@@ -88,7 +92,7 @@ public class Controller implements Initializable {
     }
   }
 
-  private void makeMove(int column) {
+  public void makeMove(int column) {
     if (this.game.isLegalMove(column)) {
       // Copy current player before we make move
       final Token currentPlayer = this.game.getCurrentPlayer();
@@ -159,31 +163,10 @@ public class Controller implements Initializable {
       // User cancelled
       return;
     }
-    Game newGame = new Game();
-    try (FileReader reader = new FileReader(file)) {
+    try {
+      FileHandler fileHandler = new FileHandler(file);
       this.output.setText(String.format("Loading... %s", file.getPath()));
-
-      // Validate file
-      int c;
-      // (reader.read() - 48) to convert from ASCII code points to int
-      // (c > -1) because reader.read() returns -1 if there is no more to read
-      while ((c = reader.read() - 48) > -1) {
-        if (newGame.isLegalMove(c)) {
-          newGame.makeMove(c);
-        } else {
-          throw new IOException("Error: Cannot load file. Chosen file may illegal moves.");
-        }
-      }
-      try (FileReader newReader = new FileReader(file)) {
-        // File validated, load game
-        this.game = new Game();
-        this.resetBoard();
-
-        int d;
-        while ((d = newReader.read() - 48) > -1) {
-          this.makeMove(d);
-        }
-      }
+      fileHandler.loadGame(this);
     } catch (Exception e) {
       e.printStackTrace();
       this.output.setText(e.getMessage());
@@ -207,11 +190,5 @@ public class Controller implements Initializable {
       e.printStackTrace();
       this.output.setText("Error: Could not save game.");
     }
-  }
-
-  @FXML
-  private void startNewGame(ActionEvent event) {
-    this.game = new Game();
-    this.resetBoard();
   }
 }
