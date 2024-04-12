@@ -17,27 +17,6 @@ Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-
     -   [x] It shall explain how the app works.
     -   [x] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
 
-## Project planning
-
-### App description
-
-Connect4 is a turn-based boardgame played between 2 players where you win if you line up 4 pieces in a row, horizontally, vertically or diagonally.
-The goal of this application is to create a playable game of Connect4 with correct underlying game logic and an interactive Graphical User Interface (GUI) for playing moves.
-
-### Class descriptions - TODO
-
-Game klassen implementerer VectorGame og bruker Token til å fylle brettet sitt.
-Game klassen skal kalkulere og validere spilllogikken.
-
-### File handling
-
-Spillere skal kunne lagre et Fire-på-rad spill som en fil og kunne laste det inn igjen.
-
-### Testing
-
-Spilllogikk og filhåndtering blir testet.
-Fokuset vil være på å teste interfacet Game implementerer som Controller bruker.
-
 ## Documentation
 
 ### Description
@@ -129,14 +108,11 @@ classDiagram
         +String extractMoveHistory()
     }
 
-    BoardHelper *-- Token : uses
-    VectorGame *-- Token : uses
     Controller *-- Game : uses
     Game o-- BoardHelper : contains
     Game ..|> VectorGame : implements
     App --|> Application : extends
     App *-- Controller : uses
-    Game *-- Token : uses
 ```
 
 ### Questions
