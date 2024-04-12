@@ -56,7 +56,7 @@ public class BoardHelperTest {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         boolean isFourInARow = boardHelper.isNInARow(0, 0, 4);
-        boolean isFourInARow2 = boardHelper.isNInARow(1, 0, 4);
+        boolean isFourInARow2 = boardHelper.isNInARow(0, 1, 4);
         boolean isFiveInARow = boardHelper.isNInARow(0, 0, 5);
 
         assertTrue(isFourInARow);
