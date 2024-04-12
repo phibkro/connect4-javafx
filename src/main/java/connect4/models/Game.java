@@ -82,6 +82,14 @@ public class Game implements VectorGame {
   }
 
   /**
+   * Alternates the player to make the next move in the game between Player and
+   * Opponent.
+   */
+  private void alternatePlayer() {
+    this.currentPlayer = this.getCurrentPlayer() == Token.Player ? Token.Opponent : Token.Player;
+  }
+
+  /**
    * Checks if the game is over. The game is over if someone has won or if every
    * cell is filled (stalemate).
    * 
@@ -156,13 +164,5 @@ public class Game implements VectorGame {
     }
 
     return moveHistory.toString();
-  }
-
-  /**
-   * Alternates the player to make the next move in the game between Player and
-   * Opponent.
-   */
-  private void alternatePlayer() {
-    this.currentPlayer = this.getCurrentPlayer() == Token.Player ? Token.Opponent : Token.Player;
   }
 }
