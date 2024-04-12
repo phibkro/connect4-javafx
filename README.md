@@ -24,31 +24,23 @@ Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-
 Connect4 is a turn-based boardgame played between 2 players where you win if you line up 4 pieces in a row, horizontally, vertically or diagonally.
 The goal of this application is to create a playable game of Connect4 with correct underlying game logic and an interactive Graphical User Interface (GUI) for playing moves.
 
-### Functional requirements
-
-Our requirements for this product are as follows:
-
-- [x] A user or multiple users, shall be able to play a game of Connect 4 locally on the same machine where the players alternate playing moves
-- [x] A user shall not be allowed to play illegal moves
-- [x] A user shall be able to import a finished game with a file to browse
-- [x] A user shall be able to import an unfinished game and continue playing.
-- [x] A user shall be able to export a finished game to store or share
-
 ### Class descriptions - TODO
 
-> Fortelle kort hva de to (minimum to, kan ha flere) grunnklassene skal inneholde, og hvilken klasse som skal ha noen form for kalkulasjoner eller annen logikk.
+Game klassen implementerer VectorGame og bruker Token til å fylle brettet sitt.
+Game klassen skal kalkulere og validere spilllogikken.
 
 ### File handling
 
-A user shall be able to import and export chess games as `.pgn` files.
+Spillere skal kunne lagre et Fire-på-rad spill som en fil og kunne laste det inn igjen.
 
 ### Testing
 
-General game logic like checking for illegal moves shall be tested, as well as importing and exporting of `.pgn` files.
+Spilllogikk og filhåndtering blir testet.
+Fokuset vil være på å teste interfacet Game implementerer som Controller bruker.
 
-## Documentation - TODO
+## Documentation
 
-### Description - TODO
+### Description
 
 Vår app, Connect4, er en digital versjon av det kjente brettspillet fire på rad, hvor to spillere konkurrerer om å være den første til å få fire av sine brikker på rad, enten i kryss eller på tvers. Appen vår omfatter til sammen fire klasser, et interface, og ett enum.
 
@@ -65,8 +57,8 @@ For å sikre at appen funker slik den skal, har vi omfattende enhetstester i `Ga
 ```mermaid
 flowchart TB
   View-.->Controller
-  Controller-.->Interface
-  Interface -.-> Game
+  Controller-->Interface
+  Interface --> Game
   View -.-> Game
   Controller-.->Data
 
@@ -76,18 +68,18 @@ flowchart TB
   end
 
   subgraph GameLogic
-    Interface
+    Interface[VectorGame]
     subgraph Models
       Game[Game]
     end
   end
 
-subgraph PersistentData
-  Data[(Files)]
-end
+  subgraph PersistentData
+    Data[FileHandler]
+  end
 ```
 
-### Questions - TODO
+### Questions
 
 1. Hvilke deler av pensum i emnet dekkes i prosjektet, og på hvilken måte? (For eksempel bruk av arv, interface, delegering osv.)
 
