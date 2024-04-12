@@ -16,7 +16,19 @@ public class BoardHelper {
     private final int BOARD_WIDTH;
     private final int BOARD_HEIGHT;
 
-    public BoardHelper(int boardHeight, int boardWidth, Token[] board) {
+    public BoardHelper(int boardHeight, int boardWidth, Token[] board) throws IllegalArgumentException {
+        if (boardHeight < 1) {
+            throw new IllegalArgumentException("Board height must be at least 1");
+        }
+
+        if (boardWidth < 1) {
+            throw new IllegalArgumentException("Board width must be at least 1");
+        }
+
+        if (boardHeight * boardHeight != board.length) {
+            throw new IllegalArgumentException("Board height and width do not match the length of `board`");
+        }
+
         this.BOARD_HEIGHT = boardHeight;
         this.BOARD_WIDTH = boardWidth;
         this.board = board;
