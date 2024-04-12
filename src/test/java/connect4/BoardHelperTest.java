@@ -51,13 +51,13 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void isNInARow_DetectsFourInARow_AtStartPosition() {
+    public void isNInARow_DetectsFourInARow_WhenSequenceExists() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
         assertTrue(boardHelper.isNInARow(0, 0, 4));
     }
 
     @Test
-    public void isNInARow_DoesNotDetectFourInARow_AtInvalidPosition() {
+    public void isNInARow_DoesNotDetectFourInARow_WhenSequenceDoesNotExists() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
         assertFalse(boardHelper.isNInARow(0, 1, 4));
     }
@@ -81,15 +81,15 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void isNInARow_DiagonalLeftSequence_ReturnsTrue_WhenSequenceExists() {
+    public void isNInARow_ReturnsTrue_WhenSequenceExists() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-        assertFalse(boardHelper.isNInARow(5, 0, 4));
+        assertTrue(boardHelper.isNInARow(4, 0, 4));
     }
 
     @Test
-    public void isNInARow_ReturnsFalse_WhenOriginOutOfBounds() {
+    public void isNInARow_ReturnsFalse_WhenSequenceDoesNotExists() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-        assertFalse(boardHelper.isNInARow(5, 0, 5));
+        assertFalse(boardHelper.isNInARow(5, 0, 4));
     }
 
     @Test
