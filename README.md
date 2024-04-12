@@ -15,7 +15,7 @@ Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-
 -   [x] Documentation is required.
     -   [x] Code shall be documented. (Comments in code should answer why decisions were made as they were)
     -   [x] It shall explain how the app works.
-    -   [ ] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
+    -   [x] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
 
 ## Project planning
 
