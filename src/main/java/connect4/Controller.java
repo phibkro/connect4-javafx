@@ -184,7 +184,8 @@ public class Controller implements Initializable {
     }
     FileHandler fileHandler = new FileHandler(file);
     try {
-      fileHandler.saveGame(this.game);
+      String moveHistory = this.game.extractMoveHistory();
+      fileHandler.saveFile(moveHistory);
       this.output.setText(String.format("Saved to %s", file.getPath()));
     } catch (Exception e) {
       e.printStackTrace();

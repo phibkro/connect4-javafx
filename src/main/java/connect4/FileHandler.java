@@ -15,10 +15,9 @@ public class FileHandler {
     this.file = file;
   }
 
-  public void saveGame(Game game) throws IOException, FileNotFoundException, SecurityException {
+  public void saveFile(String text) throws IOException, FileNotFoundException, SecurityException {
     try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-      String moveHistory = game.extractMoveHistory();
-      fileOutputStream.write(moveHistory.getBytes());
+      fileOutputStream.write(text.getBytes());
     }
   }
 
