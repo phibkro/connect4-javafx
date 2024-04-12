@@ -23,6 +23,9 @@ public class Game implements VectorGame {
    * Returns the player to make the next move in the game.
    */
   public Token getCurrentPlayer() {
+    if (this.isGameOver()) {
+      return Token.None;
+    }
     return this.currentPlayer;
   }
 

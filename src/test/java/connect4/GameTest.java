@@ -64,7 +64,7 @@ public class GameTest {
     // .getCurrentPlayer()
 
     @Test
-    public void getCurrentPlayer_Throws_IfGameOver() {
+    public void getCurrentPlayer_ReturnsNone_IfGameOver() {
         int x = 0;
         while (!this.game.isGameOver()) {
             if (this.game.isLegalMove(x)) {
@@ -76,7 +76,7 @@ public class GameTest {
                 x++;
             }
         }
-        assertThrows(IllegalStateException.class, () -> this.game.getCurrentPlayer());
+        assertEquals(Token.None, this.game.getCurrentPlayer());
     }
 
     // Test Game.isLegalMove & Game.makeMove
