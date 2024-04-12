@@ -37,6 +37,9 @@ public class Game implements VectorGame {
    */
   @Override
   public boolean isLegalMove(int column) {
+    if (this.isGameOver()) {
+      return false;
+    }
     if (column < 0 || column >= Game.WIDTH) {
       return false;
     }
