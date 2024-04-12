@@ -1,7 +1,6 @@
 package connect4;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -130,10 +129,12 @@ public class Controller implements Initializable {
   }
 
   private void handleGameOver(Token winner) {
+    // Disable all buttons
     for (Button btn : this.gameBtns) {
       btn.setDisable(true);
       btn.setOnAction(null);
     }
+    // Display the winner
     switch (winner) {
       case None:
         this.output.setText("It's a stalemate!");
@@ -198,9 +199,9 @@ public class Controller implements Initializable {
       // User cancelled
       return;
     }
-    try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-      String moveHistory = this.game.extractMoveHistory();
-      fileOutputStream.write(moveHistory.getBytes());
+    FileHandler fileHandler = new FileHandler(file);
+    try {
+      fileHandler.saveGame(this.game);
       this.output.setText(String.format("Saved to %s", file.getPath()));
     } catch (Exception e) {
       e.printStackTrace();
