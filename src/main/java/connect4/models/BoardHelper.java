@@ -13,8 +13,8 @@ public class BoardHelper {
             { -1, +1 }, { +1, -1 }, // ↗, ↙
     };
     private Token[] board;
-    public int BOARD_WIDTH;
-    public int BOARD_HEIGHT;
+    private final int BOARD_WIDTH;
+    private final int BOARD_HEIGHT;
 
     public BoardHelper(int boardHeight, int boardWidth, Token[] board) {
         this.BOARD_HEIGHT = boardHeight;
