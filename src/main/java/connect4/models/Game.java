@@ -38,7 +38,7 @@ public class Game implements VectorGame {
       return false;
     }
 
-    BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+    BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
     Token[] highestRow = boardHelper.getRow(0);
 
     return highestRow[column] == Token.None;
@@ -64,7 +64,7 @@ public class Game implements VectorGame {
       throw new IllegalStateException("Illegal move to full column " + column);
     }
 
-    BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+    BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
     Token[] selectedColumn = boardHelper.getColumn(column);
 
     for (int row = Game.HEIGHT - 1; row >= 0; row--) {
@@ -86,7 +86,7 @@ public class Game implements VectorGame {
    */
   @Override
   public boolean isGameOver() {
-    BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+    BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
     if (this.moveHistory.size() == Game.SIZE) {
       return true;
@@ -121,7 +121,7 @@ public class Game implements VectorGame {
       throw new IllegalStateException("Game is not over");
     }
 
-    BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+    BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
     for (int row = 0; row < Game.HEIGHT; row++) {
       for (int column = 0; column < Game.WIDTH; column++) {

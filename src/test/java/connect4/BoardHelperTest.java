@@ -14,15 +14,13 @@ import connect4.models.Game;
 import connect4.models.Token;
 
 public class BoardHelperTest {
-    private Token[] board;
+    private Token[] board = new Token[Game.SIZE];
 
     @BeforeEach
     public void setUp() {
-        Token[] board = new Token[Game.SIZE];
+        Arrays.fill(this.board, Token.None);
 
-        Arrays.fill(board, Token.None);
-
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         board[boardHelper.translate(0, 0)] = Token.Player;
         board[boardHelper.translate(0, 1)] = Token.Player;
@@ -35,13 +33,11 @@ public class BoardHelperTest {
 
         board[boardHelper.translate(5, 0)] = Token.Player;
         board[boardHelper.translate(5, 1)] = Token.Player;
-
-        this.board = board;
     }
 
     @Test
     public void testGetRow() {
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         Token[] row = boardHelper.getRow(0);
         assertEquals(7, row.length);
@@ -49,7 +45,7 @@ public class BoardHelperTest {
 
     @Test
     public void testGetColumn() {
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         Token[] column = boardHelper.getColumn(0);
         assertEquals(6, column.length);
@@ -57,11 +53,11 @@ public class BoardHelperTest {
 
     @Test
     public void testIsNInARow() {
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
-        boolean isFourInARow = boardHelper.isNInARow(Token.Player, 0, 0, 4);
-        boolean isFourInARow2 = boardHelper.isNInARow(Token.Player, 1, 0, 4);
-        boolean isFiveInARow = boardHelper.isNInARow(Token.Player, 0, 0, 5);
+        boolean isFourInARow = boardHelper.isNInARow(0, 0, 4);
+        boolean isFourInARow2 = boardHelper.isNInARow(1, 0, 4);
+        boolean isFiveInARow = boardHelper.isNInARow(0, 0, 5);
 
         assertTrue(isFourInARow);
         assertFalse(isFourInARow2);
@@ -70,7 +66,7 @@ public class BoardHelperTest {
 
     @Test
     public void getTileTest() {
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         Token tile = boardHelper.getToken(0, 0);
         assertEquals(Token.Player, tile);
@@ -78,7 +74,7 @@ public class BoardHelperTest {
 
     @Test
     public void translateTest() {
-        BoardHelper boardHelper = new BoardHelper(Game.HEIGHT, Game.WIDTH, this.board);
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
 
         assertEquals(0, boardHelper.translate(0, 0));
         assertEquals(1, boardHelper.translate(0, 1));
