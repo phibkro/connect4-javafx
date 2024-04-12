@@ -4,18 +4,18 @@ Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-
 
 ## Requirements
 
-- [x] Minimum 2 self-implemented classes
-  - [x] Minimum 1 class for calculation. Can be: game logic, math calculation, etc...
-  - [x] Minimum 1 class has to implement a self-made or pre-existing interface (Iterable, Comparable)
-- [x] All classes requires complete encapsulation and validation if necessary
-- [x] The app requires a user interface in JavaFX with corresponding Controller and App classes. These do not count for the minimum requirement of 2 self-implemented classes.
-- [x] The app requires the functionality to read and write from files.
-- [x] The app requires appropriate error handling
-- [x] JUnit-tests shall be used to test functionality of the app
-- [x] Documentation is required.
-  - [x] Code shall be documented. (Comments in code should answer why decisions were made as they were)
-  - [x] It shall explain how the app works.
-  - [ ] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
+-   [x] Minimum 2 self-implemented classes
+    -   [x] Minimum 1 class for calculation. Can be: game logic, math calculation, etc...
+    -   [x] Minimum 1 class has to implement a self-made or pre-existing interface (Iterable, Comparable)
+-   [x] All classes requires complete encapsulation and validation if necessary
+-   [x] The app requires a user interface in JavaFX with corresponding Controller and App classes. These do not count for the minimum requirement of 2 self-implemented classes.
+-   [x] The app requires the functionality to read and write from files.
+-   [x] The app requires appropriate error handling
+-   [x] JUnit-tests shall be used to test functionality of the app
+-   [x] Documentation is required.
+    -   [x] Code shall be documented. (Comments in code should answer why decisions were made as they were)
+    -   [x] It shall explain how the app works.
+    -   [ ] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
 
 ## Project planning
 
@@ -52,31 +52,91 @@ Brukergrensesnittet og spillinteraksjonen håndteres gjennom `App`- og `Controll
 
 For å sikre at appen funker slik den skal, har vi omfattende enhetstester i `GameTest` og `BoardHelperTest`. Målet er å teste flest mulige scenarioer for å bla.a. sikre at ingen ugylige trekk kan gjøres, og at spillet alltid kan avgjøre en vinner.
 
-### Diagram - TODO
+### Diagram
 
 ```mermaid
-flowchart TB
-  View-.->Controller
-  Controller-->Interface
-  Interface --> Game
-  View -.-> Game
-  Controller-.->Data
+classDiagram
+    class Token {
+        <<Enumeration>>
+        None
+        Player
+        Opponent
+    }
 
-  subgraph UserInterface
-    View[FXML]
-    Controller
-  end
+    class App {
+        +static void main(String[] args)
+        +void start(Stage primaryStage)
+    }
 
-  subgraph GameLogic
-    Interface[VectorGame]
-    subgraph Models
-      Game[Game]
-    end
-  end
+    class Controller {
+        -static final int TILE_SIZE
+        -Game game
+        -Text output
+        -Button btnStartGame
+        -Button btnLoadGame
+        -HBox board
+        -VBox[] columns
+        -Button[] gameBtns
+        +void initialize(URL location, ResourceBundle resources)
+        +void startNewGame()
+        -void resetBoard()
+        +void makeMove(int column)
+        -void handleGameOver(Token winner)
+        -void loadGame(ActionEvent event)
+        -void saveGame(ActionEvent event)
+    }
 
-  subgraph PersistentData
-    Data[FileHandler]
-  end
+    class Game {
+        +static final int WINNING_LENGTH
+        +static final int HEIGHT
+        +static final int WIDTH
+        +static final int SIZE
+        -Token currentPlayer
+        -List~Integer~ moveHistory
+        -Token[] board
+        +Game()
+        +Token getCurrentPlayer()
+        +boolean isLegalMove(int column)
+        +void makeMove(int column)
+        -void alternatePlayer()
+        +boolean isGameOver()
+        +Token getWinner()
+        +String extractMoveHistory()
+    }
+
+    class BoardHelper {
+        -static final int[][] DIRECTIONS
+        -final Token[] board
+        -final int BOARD_WIDTH
+        -final int BOARD_HEIGHT
+        +BoardHelper(Token[] board, int boardWidth)
+        +Token[] getRow(int row)
+        +Token[] getColumn(int column)
+        +boolean isNInARow(int originRow, int originColumn, int n)
+        +Token getToken(int row, int column)
+        +Token getToken(int index)
+        +int translate(int row, int column)
+        -boolean columnOutOfBounds(int column)
+        -boolean rowOutOfBounds(int row)
+    }
+
+    class VectorGame {
+        <<Interface>>
+        +void makeMove(int column)
+        +boolean isLegalMove(int column)
+        +boolean isGameOver()
+        +Token getWinner()
+        +String extractMoveHistory()
+    }
+
+    BoardHelper *-- Token : uses
+    VectorGame *-- Token : uses
+    Controller *-- Game : uses
+    Game o-- BoardHelper : contains
+    Game ..|> VectorGame : implements
+    App --|> Application : extends
+    App *-- Controller : uses
+    Game *-- Token : uses
 ```
 
 ### Questions
@@ -120,7 +180,7 @@ Dette er ikke nødvendigvis et avvik,
 men det er verdt å bemerke.
 
 4. Hvordan har dere gått frem når dere skulle teste appen deres, og hvorfor har dere valgt de testene dere har? Har dere testet alle deler av koden? Hvis ikke, hvordan har dere prioritert hvilke deler som testes og ikke? (Her er tanken at dere skal
-reflektere rundt egen bruk av tester)
+   reflektere rundt egen bruk av tester)
 
 Måten vi har gått frem med testing er å skrive tester til slutt siden vi ikke viste hvordan klasser og metoder kom til å se ut i sluttproduktet.
 Ettersom vi begynte å se sluttformen på spillet kunne vi begynne å skrive tester for å passe på at oppførselen ikke endrer seg.
