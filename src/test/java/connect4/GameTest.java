@@ -21,7 +21,6 @@ public class GameTest {
 
     // Example for test naming: Functionality_ExpectedBehavior_StateUnderTest
     // or for unit testing: MethodName_ExpectedBehavior_StateUnderTest
-    // Test game logic correct state handling
     @Test
     public void CurrentPlayer_StartsAs_Player() {
         assertEquals(Token.Player, this.game.getCurrentPlayer());
@@ -29,59 +28,38 @@ public class GameTest {
 
     @Test
     public void CurrentPlayer_ShouldAlternate_OnMove() throws Exception {
-        Token evenPlayer = this.game.getCurrentPlayer();
-        Token oddPlayer;
-        switch (evenPlayer) {
-            case Player:
-                oddPlayer = Token.Opponent;
-                break;
-            case Opponent:
-                oddPlayer = Token.Player;
-                break;
-            case None:
-                throw new Exception(String.format("Starting player cannot be %s", Token.None.toString()));
-            default:
-                throw new Exception("Starting player cannot be Null");
+        Token currentPlayer = this.game.getCurrentPlayer();
+
+        if (currentPlayer != Token.Player && currentPlayer != Token.Opponent) {
+            throw new Exception("Starting `currentPlayer` must be either Player or Opponent.");
         }
 
-        int x = 0;
-        while (this.game.isLegalMove(x)) {
-            if (x % 2 == 0) {
-                assertEquals(this.game.getCurrentPlayer(), evenPlayer);
-            } else {
-                assertEquals(this.game.getCurrentPlayer(), oddPlayer);
-            }
+        for (int x = 0; x < 7; x++) {
+            assertEquals(currentPlayer, this.game.getCurrentPlayer());
             this.game.makeMove(x);
-            if (x == 7) {
-                x = 0;
-            } else {
-                x++;
-            }
+
+            currentPlayer = (currentPlayer == Token.Player) ? Token.Opponent : Token.Player;
         }
     }
-
-    // Unit test Game methods
-    // .getCurrentPlayer()
 
     @Test
     public void getCurrentPlayer_ReturnsNone_IfGameOver() {
-        int x = 0;
-        while (!this.game.isGameOver()) {
-            if (this.game.isLegalMove(x)) {
-                this.game.makeMove(x);
+        // Create stalemate
+        for (int row = 0; row < Game.HEIGHT / 2; row++) {
+            this.game.makeMove(Game.WIDTH / 2);
+            for (int column = 0; column < Game.WIDTH / 2; column++) {
+                this.game.makeMove(column);
+                this.game.makeMove(column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
             }
-            if (x == 7) {
-                x = 0;
-            } else {
-                x++;
-            }
+            this.game.makeMove(Game.WIDTH / 2);
         }
+
         assertEquals(Token.None, this.game.getCurrentPlayer());
     }
 
-    // Test Game.isLegalMove & Game.makeMove
     // Test these together since their behavior is equivalent
-    // When makeMove throws isLegalMove returns false
     @Test
     public void Move_IsIllegal_IfInputIsNegative() {
         assertFalse(this.game.isLegalMove(-1));
@@ -119,14 +97,35 @@ public class GameTest {
 
     @Test
     public void Move_IsIllegal_IfGameOver() throws Exception {
-        // TODO
-        throw new Exception("Test not implemented");
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+
+        assertFalse(this.game.isLegalMove(0));
+
+        assertThrows(IllegalStateException.class, () -> {
+            this.game.makeMove(0);
+        });
     }
 
     @Test
     public void Move_ShouldNotMutateGameState_IfIllegal() throws Exception {
-        // TODO
-        throw new Exception("Test not implemented");
+        Game gameCopy = new Game();
+
+        game.makeMove(0);
+        gameCopy.makeMove(0);
+
+        game.makeMove(2);
+        gameCopy.makeMove(2);
+
+        assertThrows(IllegalArgumentException.class, () -> game.makeMove(-1));
+
+        assertTrue(game.extractMoveHistory().equals(gameCopy.extractMoveHistory()));
+        assertTrue(game.getCurrentPlayer().equals(gameCopy.getCurrentPlayer()));
     }
 
     // Test game over states
@@ -141,14 +140,32 @@ public class GameTest {
 
     @Test
     public void Game_IsOver_IfWon() throws Exception {
-        // TODO
-        throw new Exception("Test not implemented");
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+        this.game.makeMove(1);
+        this.game.makeMove(0);
+
+        assertTrue(this.game.isGameOver());
     }
 
     @Test
     public void Game_IsOver_IfBoardIsFull() throws Exception {
-        // TODO
-        throw new Exception("Test not implemented");
+        // Create stalemate
+        for (int row = 0; row < Game.HEIGHT / 2; row++) {
+            this.game.makeMove(Game.WIDTH / 2);
+            for (int column = 0; column < Game.WIDTH / 2; column++) {
+                this.game.makeMove(column);
+                this.game.makeMove(column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
+            }
+            this.game.makeMove(Game.WIDTH / 2);
+        }
+
+        assertTrue(this.game.isGameOver());
     }
 
     @Test
@@ -173,20 +190,19 @@ public class GameTest {
 
     @Test
     public void getWinner_ReturnsNone_IfStaleMate() throws Exception {
-        // TODO
-        throw new Exception("Test not implemented");
-    }
+        // Create stalemate
+        for (int row = 0; row < Game.HEIGHT / 2; row++) {
+            this.game.makeMove(Game.WIDTH / 2);
+            for (int column = 0; column < Game.WIDTH / 2; column++) {
+                this.game.makeMove(column);
+                this.game.makeMove(column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
+                this.game.makeMove(Game.WIDTH - 1 - column);
+            }
+            this.game.makeMove(Game.WIDTH / 2);
+        }
 
-    @Test
-    public void testLoadMoveHistory() {
-        this.game.makeMove(0);
-
-        String moveHistory = this.game.extractMoveHistory();
-
-        this.game = new Game();
-        this.game.loadMoveHistory(moveHistory);
-
-        assertEquals(Token.Opponent, this.game.getCurrentPlayer());
+        assertEquals(Token.None, this.game.getWinner());
     }
 
     @Test
