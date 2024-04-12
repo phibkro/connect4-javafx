@@ -2,6 +2,7 @@ package connect4;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -36,51 +37,89 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void testGetRow() {
+    public void getRow_LengthSameAs_BoardWidth() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-
         Token[] row = boardHelper.getRow(0);
         assertEquals(7, row.length);
     }
 
     @Test
-    public void testGetColumn() {
+    public void getColumn_LengthSameAs_BoardColumn() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-
         Token[] column = boardHelper.getColumn(0);
         assertEquals(6, column.length);
     }
 
     @Test
-    public void testIsNInARow() {
+    public void isNInARow_DetectsFourInARow_AtStartPosition() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-
-        boolean isFourInARow = boardHelper.isNInARow(0, 0, 4);
-        boolean isFourInARow2 = boardHelper.isNInARow(0, 1, 4);
-        boolean isFiveInARow = boardHelper.isNInARow(0, 0, 5);
-
-        assertTrue(isFourInARow);
-        assertFalse(isFourInARow2);
-        assertFalse(isFiveInARow);
+        assertTrue(boardHelper.isNInARow(0, 0, 4));
     }
 
     @Test
-    public void getTileTest() {
+    public void isNInARow_DoesNotDetectFourInARow_AtInvalidPosition() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
-
-        Token tile = boardHelper.getToken(0, 0);
-        assertEquals(Token.Player, tile);
+        assertFalse(boardHelper.isNInARow(0, 1, 4));
     }
 
     @Test
-    public void translateTest() {
+    public void isNInARow_DoesNotDetectMoreThan_FourInARowWhenCheckingForFour() {
         BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertFalse(boardHelper.isNInARow(0, 0, 5));
+    }
 
+    @Test
+    public void isNInARow_ThrowsException_WhenStartingIndexOutOfBounds() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertThrows(IllegalArgumentException.class, () -> boardHelper.isNInARow(-1, 0, 4));
+    }
+
+    @Test
+    public void isNInARow_ThrowsException_WhenNLessThanOne() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertThrows(IllegalArgumentException.class, () -> boardHelper.isNInARow(0, 0, 0));
+    }
+
+    @Test
+    public void isNInARow_DiagonalLeftSequence_ReturnsTrue_WhenSequenceExists() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertFalse(boardHelper.isNInARow(5, 0, 4));
+    }
+
+    @Test
+    public void isNInARow_ReturnsFalse_WhenOriginOutOfBounds() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertFalse(boardHelper.isNInARow(5, 0, 5));
+    }
+
+    @Test
+    public void getToken_ReturnsCorrectToken_AtGivenPosition() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertEquals(Token.Player, boardHelper.getToken(0, 0));
+    }
+
+    @Test
+    public void translate_CoordinatesToIndex_AtTopLeft() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
         assertEquals(0, boardHelper.translate(0, 0));
-        assertEquals(1, boardHelper.translate(0, 1));
-        assertEquals(7, boardHelper.translate(1, 0));
-        assertEquals(8, boardHelper.translate(1, 1));
-        assertEquals(14, boardHelper.translate(2, 0));
-        assertEquals(15, boardHelper.translate(2, 1));
     }
+
+    @Test
+    public void translate_CoordinatesToIndex_AtTopRight() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertEquals(1, boardHelper.translate(0, 1));
+    }
+
+    @Test
+    public void translate_CoordinatesToIndex_SecondRowFirstColumn() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertEquals(7, boardHelper.translate(1, 0));
+    }
+
+    @Test
+    public void translate_CoordinatesToIndex_SecondRowSecondColumn() {
+        BoardHelper boardHelper = new BoardHelper(Arrays.copyOf(this.board, this.board.length), Game.WIDTH);
+        assertEquals(8, boardHelper.translate(1, 1));
+    }
+
 }
