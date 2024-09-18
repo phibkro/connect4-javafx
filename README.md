@@ -4,18 +4,18 @@ Connect4 implemented in JavaFX is my project for the subject of Object-Oriented-
 
 ## Requirements
 
--   [x] Minimum 2 self-implemented classes
-    -   [x] Minimum 1 class for calculation. Can be: game logic, math calculation, etc...
-    -   [x] Minimum 1 class has to implement a self-made or pre-existing interface (Iterable, Comparable)
--   [x] All classes requires complete encapsulation and validation if necessary
--   [x] The app requires a user interface in JavaFX with corresponding Controller and App classes. These do not count for the minimum requirement of 2 self-implemented classes.
--   [x] The app requires the functionality to read and write from files.
--   [x] The app requires appropriate error handling
--   [x] JUnit-tests shall be used to test functionality of the app
--   [x] Documentation is required.
-    -   [x] Code shall be documented. (Comments in code should answer why decisions were made as they were)
-    -   [x] It shall explain how the app works.
-    -   [x] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
+- [x] Minimum 2 self-implemented classes
+  - [x] Minimum 1 class for calculation. Can be: game logic, math calculation, etc...
+  - [x] Minimum 1 class has to implement a self-made or pre-existing interface (Iterable, Comparable)
+- [x] All classes requires complete encapsulation and validation if necessary
+- [x] The app requires a user interface in JavaFX with corresponding Controller and App classes. These do not count for the minimum requirement of 2 self-implemented classes.
+- [x] The app requires the functionality to read and write from files.
+- [x] The app requires appropriate error handling
+- [x] JUnit-tests shall be used to test functionality of the app
+- [x] Documentation is required.
+  - [x] Code shall be documented. (Comments in code should answer why decisions were made as they were)
+  - [x] It shall explain how the app works.
+  - [x] How the project fulfills requirements shall be explained. Use relevant phrases and terminology to the subject.
 
 ## Documentation
 
@@ -166,7 +166,3 @@ Vi har valgt å hovedsakelig fokusere på testing av grensesnittet (`VectorGame`
 Dette er grensesnittet `Controller` tar i bruk for å oppdatere spillets tilstand,
 dermed vet vi til en viss grad at hvis grensesnittet `VectorGame` funker,
 trenger vi ikke å teste implementasjonen `Game`.
-
-## Credits
-
-<a href="https://www.flaticon.com/free-icons/joystick" title="joystick icons">Joystick icons created by Us and Up - Flaticon</a>
